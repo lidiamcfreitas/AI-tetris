@@ -22,14 +22,9 @@
 
 (defstruct estado
     (pontos 0)
-    (num-vars 0)
-    (restricoes NIL)
-    (var-doms NIL)
-    (var-restrs NIL)
-    (empty-vars NIL)
-    (dirty NIL)
-    (atribuicoes NIL))
-
+    (pecas-por-colocar NIL)
+    (pecas-colocadas NIL)
+    (pecas-colocadas NIL))
 
 ; ======================================================================================= ;
 ; ======================================================================================= ;
