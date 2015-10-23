@@ -22,13 +22,16 @@
 
 (defstruct estado
     (pontos 0)
-    (num-vars 0)
-    (restricoes NIL)
-    (var-doms NIL)
-    (var-restrs NIL)
-    (empty-vars NIL)
-    (dirty NIL)
-    (atribuicoes NIL))
+    (pecas-por-colocar NIL)
+    (pecas-colocadas NIL)
+    (tabuleiro NIL))
+
+(defstruct problema
+	(estado-inicial NIL)
+	(solucao NIL)
+	(accoes NIL)
+	(resultado NIL)
+	(custo-caminho NIL))
 
 
 ; ======================================================================================= ;
@@ -78,16 +81,18 @@
 (defun tabuleiro-altura-coluna(tabuleiro c)
     (let ((altura 0))
         (dotimes(l 18)
-	    (if (aref tabuleiro l c) 
-	        (progn  (setf altura (- 18 l)) 
-	        (setf l 18) ) () ))
-	altura))
+	    (when (aref tabuleiro l c) 
+	        (setf altura (- 17 l)) 
+	        (return))
+			altura)))
 
 (defun tabuleiro-linha-completa-p(tabuleiro l)
     (let ((p T))
     (dotimes(columns 10)
-        (if (aref tabuleiro l columns) () (setf p nil )))
-    p))
+        (when (not(aref tabuleiro (- 17 l) columns))
+        	(setf p NIL)
+        	(return))
+    p)))
 
 (defun tabuleiro-preenche! (tabuleiro l c)
     (if (and (<= l 17) (<= c 9)) 
@@ -100,14 +105,22 @@
     (dotimes(c 10)
         (tabuleiro-despreenche tabuleiro l c)))
 
+;(defun tabuleiro-topo-preenchido(tabuleiro)
+;    (let ((p NIL) (l 17))
+;        (dotimes(columns 10)
+;            (if (aref tabuleiro l columns) 
+;                (progn  (setf p T ) 
+;                        (setf columns 10)) 
+;                ()))
+;    p)) 
+
 (defun tabuleiro-topo-preenchido(tabuleiro)
-    (let ((p NIL) (l 17))
-        (dotimes(columns 10)
-            (if (aref tabuleiro l columns) 
-                (progn  (setf p T ) 
-                        (setf columns 10)) 
-                ()))
-    p)) 
+    (dotimes(columns 10 NIL)
+        (when (aref tabuleiro 0 columns)
+        	;(setf p T)
+        	(return T))
+    ))
+
 
 (defun tabuleiros-iguais-p(tabuleiro1 tabuleiro2)
     (equalp tabuleiro1 tabuleiro2))
@@ -120,16 +133,55 @@
         (setf tabuleiro (copia-tabuleiro array))
         tabuleiro))
 
+;desenhar tabuleiro
+;chamar a funcao desenha linha exterior e a funcao desenha 
+;esta no utils
+
+;temporario
+
+(defun cria-estado(p ppc pc tab)
+    (make-estado :pontos p :pecas-por-colocar ppc :pecas-colocadas pc :tabuleiro tab))
+         
+
+(defun copia-estado(eo)
+    (cria-estado (estado-pontos eo) 
+    	(estado-pecas-por-colocar eo) 
+    	(estado-pecas-colocadas eo) 
+    	(estado-tabuleiro eo)))
+
+(defun estados-iguais-p(estado1 estado2)
+    (and (eql(estado-pontos estado1)(estado-pontos estado2)) 
+    (eql(estado-pecas-por-colocar estado1)(estado-pecas-por-colocar estado2))
+    (eql(estado-pecas-colocadas estado1)(estado-pecas-colocadas estado2))
+    (eql(estado-tabuleiro estado1) (estado-tabuleiro estado2))))
+
+(defun estado-final-p(estado)
+  (or(tabuleiro-topo-preenchido (estado-tabuleiro estado)) 
+  	(eql(estado-pecas-por-colocar estado) 0)))
+
+(defun solucao(estado)
+  (and(not(tabuleiro-topo-preenchido (estado-tabuleiro estado))) 
+  	(eql(estado-pecas-por-colocar estado) 0)))
+
+
 
 (load "utils.lisp")
 
-
 ;TESTING
-(let ((tabuleiro NIL) (tabuleiro-novo NIL))
-    (setf tabuleiro (cria-tabuleiro))
-    (tabuleiro-preenche! tabuleiro 0 0)
-    (setf tabuleiro-novo (copia-tabuleiro tabuleiro ))
+(defun teste()
+
+(let ((tabuleiro22 NIL)(tabuleiro NIL) (tabuleiro-novo NIL)(estado1 NIL)(estado2 NIL))
+;(setf tabuleiro22 (cria-tabuleiro))
+;(tabuleiro-preenche! tabuleiro22 17 0)
+;(tabuleiro-topo-preenchido tabuleiro22)
+
+ (setf tabuleiro (cria-tabuleiro))
+ (tabuleiro-preenche! tabuleiro 17 0)
+ ;(setf tabuleiro-novo (copia-tabuleiro tabuleiro ))
     ;(tabuleiro-despreenche tabuleiro-novo 0 0)
-    (tabuleiro-preenche! tabuleiro-novo 2 0)
-    (tabuleiro-preenche! tabuleiro 2 0)
-)
+    ;(tabuleiro-preenche! tabuleiro-novo 0 0)
+    ;(setf estado1 (cria-estado 100 0 2 (copia-tabuleiro tabuleiro-novo)))
+    (setf estado2 (cria-estado 100 2 2 (copia-tabuleiro tabuleiro)))
+    (solucao estado2)
+    ;(solucao estado1)
+))
