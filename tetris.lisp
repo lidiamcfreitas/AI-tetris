@@ -83,8 +83,8 @@
     (dotimes(l 18)
       (when (aref tabuleiro l c) 
         (setf altura (- 17 l)) 
-        (return))
-      altura)))
+        (return)))
+      (1+ altura)))
 
 (defun tabuleiro-linha-completa-p(tabuleiro l)
   (let ((p T))
@@ -115,9 +115,18 @@
 (defun tabuleiros-iguais-p(tabuleiro1 tabuleiro2)
   (equalp tabuleiro1 tabuleiro2))
 
-(defun tabuleiro->array(tabuleiro)  ; rever com professor
-  (copia-tabuleiro tabuleiro))
+;(defun tabuleiro->array(tabuleiro)  ; rever com professor
+;  (copia-tabuleiro tabuleiro))
 
+(defun tabuleiro->array(tabuleiro)
+    (let ((lines 18) (columns 10) (k 0) (array-tabuleiro (make-array '(180))))
+        (dotimes (i lines)
+            (dotimes (j columns)
+                    (setf (aref array-tabuleiro k) (aref tabuleiro i j))
+                    (1+ k)))
+        array-tabuleiro ))
+
+      
 (defun array->tabuleiro(array)      ; rever com professor
   (let ((tabuleiro NIL))
     (setf tabuleiro (copia-tabuleiro array))
@@ -151,25 +160,27 @@
 (load "utils.lisp")
 
 ;TESTING
-(defun teste()
+;(defun teste()
 
-  (let ((tabuleiro22 NIL)
-        (tabuleiro NIL) 
-        (tabuleiro-novo NIL)
-        (estado1 NIL)
-        (estado2 NIL))
+;  (let ((tabuleiro22 NIL)
+;        (tabuleiro NIL) 
+;        (tabuleiro-novo NIL)
+;        (estado1 NIL)
+;        (estado2 NIL))
 
-    ;(setf tabuleiro22 (cria-tabuleiro))
-    ;(tabuleiro-preenche! tabuleiro22 17 0)
+;    (setf tabuleiro22 (cria-tabuleiro))
+;    (tabuleiro-preenche! tabuleiro22 15 2)
+;    (tabuleiro-altura-coluna tabuleiro22 2)
+    
     ;(tabuleiro-topo-preenchido tabuleiro22)
 
-    (setf tabuleiro (cria-tabuleiro))
-    (tabuleiro-preenche! tabuleiro 17 0)
+    ;(setf tabuleiro (cria-tabuleiro))
+    ;(tabuleiro-preenche! tabuleiro 17 0)
     ;(setf tabuleiro-novo (copia-tabuleiro tabuleiro ))
     ;(tabuleiro-despreenche tabuleiro-novo 0 0)
     ;(tabuleiro-preenche! tabuleiro-novo 0 0)
     ;(setf estado1 (cria-estado 100 0 2 (copia-tabuleiro tabuleiro-novo)))
-    (setf estado2 (cria-estado 100 2 2 (copia-tabuleiro tabuleiro)))
-    (solucao estado2)
+    ;(setf estado2 (cria-estado 100 2 2 (copia-tabuleiro tabuleiro)))
+    ;(solucao estado2)
     ;(solucao estado1)
-    ))
+;  )
