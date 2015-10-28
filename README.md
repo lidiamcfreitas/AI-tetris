@@ -10,15 +10,6 @@ Once chosen the rotation and position, the piece should fall right without any f
 
 ## Details about Lisp Enviroment
 
-For changing line:
-
-```
-> (format t "~%")
-
-NIL
-```
-
-> See description of the [Format](http://www.lispworks.com/documentation/lw50/CLHS/Body/f_format.htm) in [HyperSpec](http://www.lispworks.com/documentation/HyperSpec/Front/).
 
 To load a source file for the Lisp environment:
 
