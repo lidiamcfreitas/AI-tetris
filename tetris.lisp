@@ -13,7 +13,6 @@
     (pontos 0)
     (pecas-por-colocar NIL)
     (pecas-colocadas NIL)
-    (pecas-colocadas NIL)
     (tabuleiro NIL))
 
 (defstruct problema
@@ -146,7 +145,7 @@
 
 
 
-(load "utils.lisp")
+(load "utils.fas")
 
 ;TESTING
 ;(defun teste()
