@@ -153,3 +153,4 @@
 				   :accoes #'accoes
 				   :resultado #'resultado
 				   :custo-caminho #'custo-oportunidade))
+
