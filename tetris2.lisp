@@ -38,6 +38,9 @@
 (defun cria-accao (coluna peca)
   (cons coluna peca))
 
+;(defun cria-accao (int array_pecas)
+;  (accao int array_pecas))
+
 (defun accao-coluna (acc)
   (car acc))
 
@@ -112,7 +115,7 @@
         array-tabuleiro ))
 
       
-(defun array->tabuleiro(array)      
+(defun array->tabuleiro(array)      ; rever com professor
   (let ((tabuleiro NIL))
     (setf tabuleiro (copia-tabuleiro array))
     tabuleiro))
