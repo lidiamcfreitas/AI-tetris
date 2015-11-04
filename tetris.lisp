@@ -1,9 +1,6 @@
 ; GRUPO 29 - (insere-alunos (cria-aluno Bruno Cardoso 72619) (cria-aluno Francisco Calisto 70916) (cria-aluno Lidia Freitas 78559))
 
 
-; (load "examples.fas")
-; (load "my-test.lisp")
-
 ; ======================================================================================= ;
 ;                               DEFINICAO DAS ESTRUTURAS DE DADOS                         ;
 ; ======================================================================================= ;
@@ -61,15 +58,15 @@
     tabuleiro-novo))
 
 (defun tabuleiro-preenchido-p (tabuleiro l c) 
-  (aref tabuleiro l c))
+  (aref tabuleiro (- 17 l) c))
 
 (defun tabuleiro-altura-coluna(tabuleiro c)
   (let ((altura 0))
     (dotimes(l 18)
       (when (aref tabuleiro l c) 
-        (setf altura (- 17 l)) 
+        (setf altura (- 18 l)) 
         (return)))
-      (1+ altura)))
+      altura))
 
 (defun tabuleiro-linha-completa-p(tabuleiro l)
   (let ((p T))
@@ -90,7 +87,7 @@
   (dotimes(c 10)
     (tabuleiro-despreenche tabuleiro l c)))
 
-(defun tabuleiro-topo-preenchido(tabuleiro)
+(defun tabuleiro-topo-preenchido-p(tabuleiro)
   (dotimes(columns 10 NIL)
     (when (aref tabuleiro 0 columns)
       ;(setf p T)
@@ -121,10 +118,7 @@
   (make-estado :pontos p :pecas-por-colocar ppc :pecas-colocadas pc :tabuleiro tab))
 
 (defun copia-estado(eo)
-  (cria-estado (estado-pontos eo) 
-               (estado-pecas-por-colocar eo) 
-               (estado-pecas-colocadas eo) 
-               (estado-tabuleiro eo)))
+  (make-estado :pontos (estado-pontos eo) :pecas-por-colocar (copy-list (estado-pecas-por-colocar eo)) :pecas-colocadas (copy-list (estado-pecas-colocadas eo)) :tabuleiro (estado-tabuleiro eo)))
 
 (defun estados-iguais-p(estado1 estado2)
   (and (eql(estado-pontos estado1)(estado-pontos estado2)) 
@@ -133,16 +127,16 @@
        (eql(estado-tabuleiro estado1) (estado-tabuleiro estado2))))
 
 (defun estado-final-p(estado)
-  (or(tabuleiro-topo-preenchido (estado-tabuleiro estado)) 
+  (or(tabuleiro-topo-preenchido-p (estado-tabuleiro estado)) 
     (eql(estado-pecas-por-colocar estado) 0)))
 
 (defun solucao(estado)
-  (and(not(tabuleiro-topo-preenchido (estado-tabuleiro estado))) 
+  (and(not(tabuleiro-topo-preenchido-p (estado-tabuleiro estado))) 
       (eql(estado-pecas-por-colocar estado) 0)))
 
 
 
-(load "utils.fas")
+(load "utils.lisp")
 
 ;TESTING
 ;(defun teste()

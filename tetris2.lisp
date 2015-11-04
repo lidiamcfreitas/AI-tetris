@@ -70,9 +70,9 @@
   (let ((altura 0))
     (dotimes(l 18)
       (when (aref tabuleiro l c) 
-        (setf altura (- 17 l)) 
+        (setf altura (- 16 l)) 
         (return)))
-      (1+ altura)))
+      (altura)))
 
 (defun tabuleiro-linha-completa-p(tabuleiro l)
   (let ((p T))
