@@ -32,6 +32,9 @@
 ;                                        TIPO RESTRICAO                                   ;
 ; ======================================================================================= ;
 
+;(load (compile-file "utils.lisp"))
+;(load "utils.lisp")
+
 (defun cria-accao (coluna peca)
   (cons coluna peca))
 
@@ -77,84 +80,114 @@
         (return)))
     retorno))
 
-  ;      (when (not(aref tabuleiro (- 17 l) columns))
-  ;        (return-from tabuleiro-linha-completa-p NIL))
-  ;      T))
+(defun tabuleiro-preenche! (tabuleiro l c)
+  (if (and (<= l 17) (<= c 9)) 
+    (setf (aref tabuleiro (- 17 l) c) T))T)
 
-  (defun tabuleiro-preenche! (tabuleiro l c)
-    (if (and (<= l 17) (<= c 9)) 
-      (setf (aref tabuleiro (- 17 l) c) T))T)
+(defun tabuleiro-despreenche (tabuleiro l c)
+  (setf (aref tabuleiro (- 17 l) c) NIL))
 
-  (defun tabuleiro-despreenche (tabuleiro l c)
-    (setf (aref tabuleiro (- 17 l) c) NIL))
+(defun tabuleiro-remove-linha!(tabuleiro l)
+  (dotimes(c 10)
+    (tabuleiro-despreenche tabuleiro l c)))
 
-  (defun tabuleiro-remove-linha!(tabuleiro l)
-    (dotimes(c 10)
-      (tabuleiro-despreenche tabuleiro l c)))
+(defun tabuleiro-topo-preenchido-p(tabuleiro)
+  (dotimes(columns 10 NIL)
+    (when (aref tabuleiro 0 columns)
+      ;(setf p T)
+      (return T))
+    ))
 
-  (defun tabuleiro-topo-preenchido-p(tabuleiro)
-    (dotimes(columns 10 NIL)
-      (when (aref tabuleiro 0 columns)
-        ;(setf p T)
-        (return T))
-      ))
+(defun tabuleiros-iguais-p (tabuleiro1 tabuleiro2)
+  (equalp tabuleiro1 tabuleiro2))
 
-  (defun tabuleiros-iguais-p (tabuleiro1 tabuleiro2)
-    (equalp tabuleiro1 tabuleiro2))
+(defun tabuleiro->array(tabuleiro)
+  (copia-tabuleiro tabuleiro))
 
-  ;(defun tabuleiro->array(tabuleiro)  ; rever com professor
-  ;  (copia-tabuleiro tabuleiro))
+(defun array->tabuleiro(array)      
+  (let ((tabuleiro NIL))
+    (setf tabuleiro (copia-tabuleiro array))
+    tabuleiro))
 
-  (defun tabuleiro->array(tabuleiro)
-    (copia-tabuleiro tabuleiro))
+(defun cria-estado(p ppc pc tab)
+  (make-estado :pontos p :pecas-por-colocar ppc :pecas-colocadas pc :tabuleiro tab))
 
-  ;  (let ((lines 18) (columns 10) (k 0) (array-tabuleiro (make-array '(180))))
-  ;        (dotimes (i lines)
-  ;            (dotimes (j columns)
-  ;                    (setf (aref array-tabuleiro k) (aref tabuleiro i j))
-  ;                    (1+ k)))
-  ;        array-tabuleiro ))
+(defun copia-estado(eo)
+  (make-estado :pontos (estado-pontos eo) 
+               :pecas-por-colocar (copy-list (estado-pecas-por-colocar eo)) 
+               :pecas-colocadas (copy-list (estado-pecas-colocadas eo)) 
+               :tabuleiro (copia-tabuleiro (estado-tabuleiro eo))))
 
+(defun estados-iguais-p(estado1 estado2)
+  (and (eql(estado-pontos estado1)(estado-pontos estado2)) 
+       (eql(estado-pecas-por-colocar estado1)(estado-pecas-por-colocar estado2))
+       (eql(estado-pecas-colocadas estado1)(estado-pecas-colocadas estado2))
+       (eql(estado-tabuleiro estado1) (estado-tabuleiro estado2))))
 
-  (defun array->tabuleiro(array)      
-    (let ((tabuleiro NIL))
-      (setf tabuleiro (copia-tabuleiro array))
-      tabuleiro))
-
-  (defun cria-estado(p ppc pc tab)
-    (make-estado :pontos p :pecas-por-colocar ppc :pecas-colocadas pc :tabuleiro tab))
-
-  (defun copia-estado(eo)
-    (make-estado :pontos (estado-pontos eo) 
-                 :pecas-por-colocar (copy-list (estado-pecas-por-colocar eo)) 
-                 :pecas-colocadas (copy-list (estado-pecas-colocadas eo)) 
-                 :tabuleiro (copia-tabuleiro (estado-tabuleiro eo))))
-
-  (defun estados-iguais-p(estado1 estado2)
-    (and (eql(estado-pontos estado1)(estado-pontos estado2)) 
-         (eql(estado-pecas-por-colocar estado1)(estado-pecas-por-colocar estado2))
-         (eql(estado-pecas-colocadas estado1)(estado-pecas-colocadas estado2))
-         (eql(estado-tabuleiro estado1) (estado-tabuleiro estado2))))
-
-  (defun estado-final-p(estado)
-    (or (tabuleiro-topo-preenchido-p (estado-tabuleiro estado)) 
-        (eql(estado-pecas-por-colocar estado) NIL)))
-
-  (defun solucao(estado)
-    (and(not(tabuleiro-topo-preenchido-p (estado-tabuleiro estado))) 
+(defun estado-final-p(estado)
+  (or (tabuleiro-topo-preenchido-p (estado-tabuleiro estado)) 
       (eql(estado-pecas-por-colocar estado) NIL)))
 
+(defun solucao(estado)
+  (and(not(tabuleiro-topo-preenchido-p (estado-tabuleiro estado))) 
+    (eql(estado-pecas-por-colocar estado) NIL)))
+
+(defun qualpeca(peca)
+  (let ((lista nil))
+        (when (equal peca 'i) (setf lista (list peca-i0 peca-i1) ))
+        (when (equal peca 'l) (setf lista (list peca-l0 peca-l1 peca-l2 peca-l3) ))
+        (when (equal peca 'j) (setf lista (list peca-j0 peca-j1 peca-j2 peca-j3) ))
+        (when (equal peca 'o) (setf lista (list peca-o0) ))
+        (when (equal peca 's) (setf lista (list peca-s0 peca-s1) ))
+        (when (equal peca 'z) (setf lista (list peca-z0 peca-z1) ))
+        (when (equal peca 't) (setf lista (list peca-t0 peca-t1 peca-t2 peca-t3) ))
+       lista))
+
+;(defun accoes(estado)
+;     (let ((listapecas nil)(numerodepecasatestar 0)
+;
+;    (listapecas (qualpeca(car(estado-pecas-por-colocar estado))))
+;
+;    (numeropecasatestar (length listapecas))
+;
+;    (largurapeca (array-dimension(car(listapecas))))
+;    (dotimes (i numerodepecasatestar)
+;      (dotimes (j 10)
+;        (dotimes (p largurapeca)
+;          (and (when (aref (estado-tabuleiro estado) 0 (j+p) NIL))
+;               (when (aref (car(listapecas) 0 p)))
+;               (1+ pode))
+;          (and (when (aref (estado-tabuleiro estado) 0 (j+p) NIL)
+;               (when (aref (car(listapecas) 0 p NIL)
+;              (1+ pode))
+;                 ))))
+;          (if eq(pode largurapeca)
+;            (progn(;ADICIONARALISTAACCOES)(pop listapecas)
+;            (pop listapecas))))
+;       )))))
 
 
-  (load "utils.fas")
+(defun qualidade(estado)
+  (- (estado-pontos estado)))
+
+(defun calculapontosporpeca(peca)
+  (let ((retorno 0))
+  (when(eq peca 'i) (setf retorno 800))
+  (when(eq peca 'j) (setf retorno 500))
+  (when(eq peca 'l) (setf retorno 500))
+  (when(eq peca 's) (setf retorno 300))
+  (when(eq peca 'z) (setf retorno 300))
+  (when(eq peca 't) (setf retorno 300))
+  (when(eq peca 'o) (setf retorno 300))
+  retorno))
+
+;(defun custo-oportunidade(estado)
+;  (let ( (pontosmaximo 0)(listalocal nil) )
+;  (setq listalocal (copy-list (estado-pecas-colocadas estado)))
+
+;  (loop for x in listalocal
+;        do ( (+ pontosmaximo  (calculapontosporpeca x ) )))
+;  pontosmaximo))
 
 
-
-  ;TESTING
-  ;(defun teste()
-
-
-
-
-  ;(solucao estado1)
-  ;  )
+(load "utils.fas")
