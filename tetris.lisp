@@ -1,4 +1,8 @@
-; GRUPO 29 - (insere-alunos (cria-aluno Bruno Cardoso 72619) (cria-aluno Francisco Calisto 70916) (cria-aluno Lidia Freitas 78559))
+; GRUPO 29 - 
+; (insere-alunos 
+; (cria-aluno Bruno Cardoso 72619) 
+; (cria-aluno Francisco Calisto 70916) 
+; (cria-aluno Lidia Freitas 78559))
 
 
 ; ======================================================================================= ;
@@ -143,58 +147,47 @@
         (when (equal peca 't) (setf lista (list peca-t0 peca-t1 peca-t2 peca-t3) ))
        lista))
 
-;(defun accoes(estado)
-;     (let ((listapecas nil)(numerodepecasatestar 0)
-;
-;    (listapecas (qualpeca(car(estado-pecas-por-colocar estado))))
-;
-;    (numeropecasatestar (length listapecas))
-;
-;    (largurapeca (array-dimension(car(listapecas))))
-;    (dotimes (i numerodepecasatestar)
-;      (dotimes (j 10)
-;        (dotimes (p largurapeca)
-;          (and (when (aref (estado-tabuleiro estado) 0 (j+p) NIL))
-;               (when (aref (car(listapecas) 0 p)))
-;               (1+ pode))
-;          (and (when (aref (estado-tabuleiro estado) 0 (j+p) NIL)
-;               (when (aref (car(listapecas) 0 p NIL)
-;              (1+ pode))
-;                 ))))
-;          (if eq(pode largurapeca)
-;            (progn(;ADICIONARALISTAACCOES)(pop listapecas)
-;            (pop listapecas))))
-;       )))))
+(defun accoes(estado)
+     (let ((listapecas nil)(numeropecasatestar 0)(largurapeca 0)(retorno (list)))
+
+    (setf listapecas (qualpeca (car(estado-pecas-por-colocar estado)) ))
+    (setf numeropecasatestar (length listapecas))
+    (dotimes (i numeropecasatestar)
+    		(setf largurapeca (array-dimension(car listapecas) 1))
+    		(dotimes (j 10)
+
+			(when (< (+ j largurapeca) 11)
+				(push  (cria-accao j (car listapecas)) retorno))
+    		)
+    		(pop listapecas))
+    retorno))
 
 
 (defun qualidade(estado)
   (- (estado-pontos estado)))
 
 
-; Notas do CALISTO
-; --> Cardoso (ou quem fez isto) acho que nao e bem assim
-; deves percorrer o tabuleiro e fazeres o calculo dos pontos
-; dependendo do num de linhas e tendo em conta se as linhas
-; sao ou nao removidas
 
 (defun calculapontosporpeca(peca)
   (let ((retorno 0))
-  (when(eq peca 'i) (setf retorno 800))
-  (when(eq peca 'j) (setf retorno 500))
-  (when(eq peca 'l) (setf retorno 500))
-  (when(eq peca 's) (setf retorno 300))
-  (when(eq peca 'z) (setf retorno 300))
-  (when(eq peca 't) (setf retorno 300))
-  (when(eq peca 'o) (setf retorno 300))
+  (when(equal peca 'i) (setf retorno 800))
+  (when(equal peca 'j) (setf retorno 500))
+  (when(equal peca 'l) (setf retorno 500))
+  (when(equal peca 's) (setf retorno 300))
+  (when(equal peca 'z) (setf retorno 300))
+  (when(equal peca 't) (setf retorno 300))
+  (when(equal peca 'o) (setf retorno 300))
   retorno))
 
-;(defun custo-oportunidade(estado)
-;  (let ( (pontosmaximo 0)(listalocal nil) )
-;  (setq listalocal (copy-list (estado-pecas-colocadas estado)))
+(defun custo-oportunidade(estado)
+ ;
+  (let ( (pontosmaximo 0)(listalocal nil) )
+  (setf listalocal (copy-list (estado-pecas-colocadas estado)))
 
-;  (loop for x in listalocal
-;        do ( (+ pontosmaximo  (calculapontosporpeca x ) )))
-;  pontosmaximo))
+  (dolist (x listalocal)
+  		(setf pontosmaximo (+ (calculapontosporpeca x) pontosmaximo))
+  	)
+  (- pontosmaximo (estado-pontos estado))))
 
 
 ; ======================================================================================= ;
@@ -251,21 +244,5 @@
 ; ======================================================================================= ;
 ;                                  END - CARE by CALISTO                                  ;
 ; ======================================================================================= ;
-
-; NOTA: o codigo que se segue e apenas uma ideia...
-; by Calisto --> CARE
-
-; (defun custo-oportunidade(estado)
-;   (let ((max-pontos 0)
-;         (pcs (estado-pecas-colocadas estado))
-;         (altura 0))
-;       (cond ((eq peca 'i) (setf max-pontos (+ max-pontos 800)))
-;             ((eq peca 'j) (setf max-pontos (+ max-pontos 500)))
-;             ((eq peca 'l) (setf max-pontos (+ max-pontos 500)))
-;             ((eq peca 's) (setf max-pontos (+ max-pontos 300)))
-;             ((eq peca 'z) (setf max-pontos (+ max-pontos 300)))
-;             ((eq peca 't) (setf max-pontos (+ max-pontos 300)))
-;             ((eq peca 'o) (setf max-pontos (+ max-pontos 300)))
-;           (T (- max-pontos (when (not (estado-pontos estado)) 0) (estado-pontos estado))))))
 
 (load "utils.fas")
