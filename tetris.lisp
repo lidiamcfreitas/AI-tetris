@@ -132,7 +132,7 @@
      (and (eql(estado-pontos estado1)(estado-pontos estado2)) 
       (equal(estado-pecas-por-colocar estado1)(estado-pecas-por-colocar estado2))
       (equal (estado-pecas-colocadas estado1)(estado-pecas-colocadas estado2))
-      (equal (estado-tabuleiro estado1) (estado-tabuleiro estado2))))
+      (tabuleiros-iguais-p (estado-tabuleiro estado1) (estado-tabuleiro estado2))))
 
     (defun estado-final-p(estado)
      (or (tabuleiro-topo-preenchido-p (estado-tabuleiro estado)) 
