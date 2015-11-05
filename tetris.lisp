@@ -166,7 +166,7 @@
         (push  (cria-accao j (car listapecas)) retorno))
         )
         (pop listapecas))
-    retorno))
+    (reverse retorno))) 
 
 
 (defun qualidade(estado)
@@ -250,22 +250,6 @@
                 ;                                  END - CARE by CALISTO                                  ;
                 ; ======================================================================================= ;
 
-                ; NOTA: o codigo que se segue e apenas uma ideia...
-                ; by Calisto --> CARE
-
-                ; (defun custo-oportunidade(estado)
-                        ;   (let ((max-pontos 0)
-                                ;         (pcs (estado-pecas-colocadas estado))
-                                ;         (altura 0))
-                            ;       (cond ((eq peca 'i) (setf max-pontos (+ max-pontos 800)))
-                                ;             ((eq peca 'j) (setf max-pontos (+ max-pontos 500)))
-                                ;             ((eq peca 'l) (setf max-pontos (+ max-pontos 500)))
-                                ;             ((eq peca 's) (setf max-pontos (+ max-pontos 300)))
-                                ;             ((eq peca 'z) (setf max-pontos (+ max-pontos 300)))
-                                ;             ((eq peca 't) (setf max-pontos (+ max-pontos 300)))
-                                ;             ((eq peca 'o) (setf max-pontos (+ max-pontos 300)))
-                                ;           (T (- max-pontos (when (not (estado-pontos estado)) 0) (estado-pontos estado))))))
-
-
+            
 
                 (load "utils.fas")
