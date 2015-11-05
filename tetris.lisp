@@ -171,9 +171,11 @@
   (- (estado-pontos estado)))
 
 
-; by CALISTO
-; --> Acho que nao e bem assim
-; Deves percorrer o tabuleiro e fazeres o calculo dos pontos
+; Notas do CALISTO
+; --> Cardoso (ou quem fez isto) acho que nao e bem assim
+; deves percorrer o tabuleiro e fazeres o calculo dos pontos
+; dependendo do num de linhas e tendo em conta se as linhas
+; sao ou nao removidas
 
 (defun calculapontosporpeca(peca)
   (let ((retorno 0))
@@ -249,5 +251,21 @@
 ; ======================================================================================= ;
 ;                                  END - CARE by CALISTO                                  ;
 ; ======================================================================================= ;
+
+; NOTA: o codigo que se segue e apenas uma ideia...
+; by Calisto --> CARE
+
+; (defun custo-oportunidade(estado)
+;   (let ((max-pontos 0)
+;         (pcs (estado-pecas-colocadas estado))
+;         (altura 0))
+;       (cond ((eq peca 'i) (setf max-pontos (+ max-pontos 800)))
+;             ((eq peca 'j) (setf max-pontos (+ max-pontos 500)))
+;             ((eq peca 'l) (setf max-pontos (+ max-pontos 500)))
+;             ((eq peca 's) (setf max-pontos (+ max-pontos 300)))
+;             ((eq peca 'z) (setf max-pontos (+ max-pontos 300)))
+;             ((eq peca 't) (setf max-pontos (+ max-pontos 300)))
+;             ((eq peca 'o) (setf max-pontos (+ max-pontos 300)))
+;           (T (- max-pontos (when (not (estado-pontos estado)) 0) (estado-pontos estado))))))
 
 (load "utils.fas")
