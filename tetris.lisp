@@ -49,7 +49,7 @@
     ; ======================================================================================= ;
 
     (defun cria-tabuleiro ()
-      (make-array (list 18 10) :initial-element nil))
+     (make-array (list 18 10) :initial-element nil))
 
     (defun copia-tabuleiro(tabuleiro-arg)
      (let ((linhas 18)(tabuleiro-novo nil) (colunas 10))
@@ -88,13 +88,13 @@
      (setf (aref tabuleiro (- 17 l) c) NIL))
 
     (defun tabuleiro-remove-linha!(tabuleiro l)
-        (if (= l 17)
-            (dotimes(c 10)
-                (tabuleiro-despreenche tabuleiro l c))
-            (progn 
-                (dotimes (c 10)
-                    (setf (aref tabuleiro (- 17 l) c) (aref tabuleiro (1- (- 17 l)) c)))
-                (tabuleiro-remove-linha! tabuleiro (1+ l)))))
+     (if (= l 17)
+      (dotimes(c 10)
+       (tabuleiro-despreenche tabuleiro l c))
+      (progn 
+       (dotimes (c 10)
+        (setf (aref tabuleiro (- 17 l) c) (aref tabuleiro (1- (- 17 l)) c)))
+       (tabuleiro-remove-linha! tabuleiro (1+ l)))))
 
 
     (defun tabuleiro-topo-preenchido-p(tabuleiro)
@@ -115,6 +115,10 @@
       (setf tabuleiro (copia-tabuleiro array))
       tabuleiro))
 
+; ======================================================================================= ;
+;                                        TIPO ESTADO                                      ;
+; ======================================================================================= ;
+
     (defun cria-estado(p ppc pc tab)
      (make-estado :pontos p :pecas-por-colocar ppc :pecas-colocadas pc :tabuleiro tab))
 
@@ -126,9 +130,9 @@
 
     (defun estados-iguais-p(estado1 estado2)
      (and (eql(estado-pontos estado1)(estado-pontos estado2)) 
-      (eql(estado-pecas-por-colocar estado1)(estado-pecas-por-colocar estado2))
-      (eql(estado-pecas-colocadas estado1)(estado-pecas-colocadas estado2))
-      (eql(estado-tabuleiro estado1) (estado-tabuleiro estado2))))
+      (equal(estado-pecas-por-colocar estado1)(estado-pecas-por-colocar estado2))
+      (equal (estado-pecas-colocadas estado1)(estado-pecas-colocadas estado2))
+      (equal (estado-tabuleiro estado1) (estado-tabuleiro estado2))))
 
     (defun estado-final-p(estado)
      (or (tabuleiro-topo-preenchido-p (estado-tabuleiro estado)) 
@@ -276,4 +280,4 @@
 
 
 
-(load "utils.fas")
+                (load "utils.fas")
