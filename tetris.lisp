@@ -170,6 +170,11 @@
 (defun qualidade(estado)
   (- (estado-pontos estado)))
 
+
+; by CALISTO
+; --> Acho que nao e bem assim
+; Deves percorrer o tabuleiro e fazeres o calculo dos pontos
+
 (defun calculapontosporpeca(peca)
   (let ((retorno 0))
   (when(eq peca 'i) (setf retorno 800))
