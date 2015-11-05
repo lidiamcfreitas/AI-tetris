@@ -199,52 +199,60 @@
     ;                                        CARE by CALISTO                                  ;
     ; ======================================================================================= ;
 
-    ; (defun resultado(estado accao)
-            ;   ; o estado nao pode ser novo, tem que ser copiado
-            ;   (let ((novo-estado (copia-estado estado))
-                    ;       ; peca colocada em col
-                    ;         (col (first accao))
-                    ;         ; pc == peca
-                    ;         (pc (rest accao))
-                    ;         ; topo da coluna
-                    ;         ; (coluna-topo (tabuleiro-altura-coluna (estado-tabuleiro novo-estado) c))
-                    ;         ; altura max onde pode ser colocada a peca
-                    ;         (max-altura (tabuleiro-altura-coluna (estado-tabuleiro estado) (first accao))))
+    (defun resultado(estado accao)
+              ; o estado nao pode ser novo, tem que ser copiado
+              (let ((novo-estado (copia-estado estado))
+                          ; peca colocada em col
+                            (col (first accao))
+                            ; pc == peca
+                            (pc (rest accao))
+                            ; topo da coluna
+                            ; (coluna-topo (tabuleiro-altura-coluna (estado-tabuleiro novo-estado) c))
+                            ; altura max onde pode ser colocada a peca
+                            (max-altura (tabuleiro-altura-coluna (estado-tabuleiro estado) (first accao))))
 
-                ;     ; loop que faz descer altura da pc caso tenha elementos a NIL na col 1
-                ;     (loop for l from 0 upto (1- (array-dimension pc 0)) do
-                    ;       ; caso em que o elemento da peca a NIL
-                    ;       (if (not (aref pc l 0))
-                        ;         ; decrementa altura
-                        ;         (1+ max-altura)
-                        ;         (return)))
+                    ; loop que faz descer altura da pc caso tenha elementos a NIL na col 1
+                    (loop for l from 0 upto (1- (array-dimension pc 0)) do
+                          ; caso em que o elemento da peca a NIL
+                          (if (not (aref pc l 0))
+                                ; decrementa altura
+                                (1+ max-altura)
+                                (return)))
 
-                ;     ;ciclo para descer a altura da pc se tiver elementos
-                ;     ; a NIL nas restantes colunas (de 2 ate a ultima)
-                ;     (loop for c from (1+ col) upto (1- (+ col (array-dimension pc 1))) do
-                    ;       ; verificacao do topo da coluna para maior que o topo da anterior
-                    ;       (if (> (tabuleiro-altura-coluna (estado-tabuleiro novo-estado) c) max-altura)
-                        ;         ; update a altura (progn para fazer isso tudo)
-                        ;         (progn (setf max-altura (tabuleiro-altura-coluna (estado-tabuleiro novo-estado) c))
-                            ;               ; ciclo para descer a altura da peca se tiver elementos
-                            ;               ; a NIL na coluna respectiva (- c coluna)
-                            ;               (loop for l from 0 upto (1- (array-dimension pc 0)) do
-                                ;                 ; caso o elemento da peca for NIL
-                                ;                 (if (not (aref pc l (- c col)))
-                                    ;                   ; decrementa altura
-                                    ;                   (decf max-altura)
-                                    ;                   (return))))))
+                    ;ciclo para descer a altura da pc se tiver elementos
+                    ; a NIL nas restantes colunas (de 2 ate a ultima)
+                    (loop for c from (1+ col) upto (1- (+ col (array-dimension pc 1))) do
+                          ; verificacao do topo da coluna para maior que o topo da anterior
+                          (if (> (tabuleiro-altura-coluna (estado-tabuleiro novo-estado) c) max-altura)
+                                ; update a altura (progn para fazer isso tudo)
+                                (progn (setf max-altura (tabuleiro-altura-coluna (estado-tabuleiro novo-estado) c))
+                                          ; ciclo para descer a altura da peca se tiver elementos
+                                          ; a NIL na coluna respectiva (- c coluna)
+                                          (loop for l from 0 upto (1- (array-dimension pc 0)) do
+                                                ; caso o elemento da peca for NIL
+                                                (if (not (aref pc l (- c col)))
+                                                      ; decrementa altura
+                                                      (decf max-altura)
+                                                      (return))))))
 
-                ;     ; loop para preencher o tabuleiro com uma dada peca
-                ;     (loop for l from max-altura upto (min 17 (1- (+ max-altura (array-dimension pc 0)))) do
-                        ;       (loop for c from col upto (1- (+ col (array-dimension pc 1))) do
-                            ;         (if (aref pc (- l max-altura) (- c col))
-                                ;           (setf (aref (estado-tabuleiro novo-estado) l c) (aref pc (- l max-altura) (- c col))))))
-                ;     ; actualiza a lista das pecas-colocadas
-                ;     (push (first (estado-pecas-por-colocar novo-estado)) (estado-pecas-colocadas novo-estado))
-                ;     ;retira a peca colocada da lista das pecas por-colocar
-                ;     (pop (estado-pecas-por-colocar novo-estado))
-                ;     novo-estado))
+                    ; loop para preencher o tabuleiro com uma dada peca
+                    (loop for l from max-altura upto (min 17 (1- (+ max-altura (array-dimension pc 0)))) do
+                              (loop for c from col upto (1- (+ col (array-dimension pc 1))) do
+                                    (if (aref pc (- l max-altura) (- c col))
+                                          (setf (aref (estado-tabuleiro novo-estado) (- 17 l) c) (aref pc (- l max-altura) (- c col))))))
+
+
+                    ;; ola, chucalisto falta-te verificar as linahs preenchidas, se estiverem, tens de as remover e atribuir pontos
+                    ;; falta-te calcular pontos
+
+                    ;; mas parabens esta funcional.
+
+                    
+                    ; actualiza a lista das pecas-colocadas
+                    (push (first (estado-pecas-por-colocar novo-estado)) (estado-pecas-colocadas novo-estado))
+                    ;retira a peca colocada da lista das pecas por-colocar
+                    (pop (estado-pecas-por-colocar novo-estado))
+                    novo-estado))
 
                 ; ======================================================================================= ;
                 ;                                  END - CARE by CALISTO                                  ;
