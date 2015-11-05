@@ -6,266 +6,274 @@
 ; ======================================================================================= ;
 
 
-(defstruct estado
-  (pontos 0)
-  (pecas-por-colocar NIL)
-  (pecas-colocadas NIL)
-  (tabuleiro NIL))
+    (defstruct estado
+     (pontos 0)
+     (pecas-por-colocar NIL)
+     (pecas-colocadas NIL)
+     (tabuleiro NIL))
 
-(defstruct problema
-  (estado-inicial NIL)
-  (solucao NIL)
-  (accoes NIL)
-  (resultado NIL)
-  (custo-caminho NIL))
+    (defstruct problema
+     (estado-inicial NIL)
+     (solucao NIL)
+     (accoes NIL)
+     (resultado NIL)
+     (custo-caminho NIL))
 
-; ======================================================================================= ;
-; ======================================================================================= ;
-;                                                                                         ;
-;                                  PROJECT | FIRST PART                                   ;
-;                                                                                         ;
-; ======================================================================================= ;
-; ======================================================================================= ;
+    ; ======================================================================================= ;
+    ; ======================================================================================= ;
+    ;                                                                                         ;
+    ;                                  PROJECT | FIRST PART                                   ;
+    ;                                                                                         ;
+    ; ======================================================================================= ;
+    ; ======================================================================================= ;
 
 
-; ======================================================================================= ;
-;                                        TIPO RESTRICAO                                   ;
-; ======================================================================================= ;
+    ; ======================================================================================= ;
+    ;                                        TIPO ACCAO                                       ;
+    ; ======================================================================================= ;
 
-;(load (compile-file "utils.lisp"))
-;(load "utils.lisp")
+    ;(load (compile-file "utils.lisp"))
+    ;(load "utils.lisp")
 
-(defun cria-accao (coluna peca)
-  (cons coluna peca))
+    (defun cria-accao (coluna peca)
+     (cons coluna peca))
 
-(defun accao-coluna (acc)
-  (car acc))
+    (defun accao-coluna (accao)
+     (car accao))
 
-(defun accao-peca (acc)
-  (cdr acc))
+    (defun accao-peca (accao)
+     (cdr accao))
 
-(defun cria-tabuleiro ()
-  (let ((lines 18) (board nil) (columns 10))
-    (setf board (make-array (list lines columns)))
-    (dotimes (i lines)
-      (dotimes (j columns)
-        (setf (aref board i j) NIL)))
-    board))
+    ; ======================================================================================= ;
+    ;                                        TIPO TABULEIRO                                   ;
+    ; ======================================================================================= ;
 
-(defun copia-tabuleiro(tabuleiro-arg)
-  (let ((linhas 18)(tabuleiro-novo nil) (colunas 10))
-    (setf tabuleiro-novo (make-array (list linhas colunas)))
-    (dotimes (i linhas)
-      (dotimes (j colunas)
+    (defun cria-tabuleiro ()
+      (make-array (list 18 10) :initial-element nil))
+
+    (defun copia-tabuleiro(tabuleiro-arg)
+     (let ((linhas 18)(tabuleiro-novo nil) (colunas 10))
+      (setf tabuleiro-novo (make-array (list linhas colunas)))
+      (dotimes (i linhas)
+       (dotimes (j colunas)
         (setf (aref tabuleiro-novo i j) (aref tabuleiro-arg i j))))
-    tabuleiro-novo))
+      tabuleiro-novo))
 
-(defun tabuleiro-preenchido-p (tabuleiro l c) 
-  (aref tabuleiro (- 17 l) c))
+    (defun tabuleiro-preenchido-p (tabuleiro l c) 
+     (aref tabuleiro (- 17 l) c))
 
-(defun tabuleiro-altura-coluna(tabuleiro c)
-  (let ((altura 0))
-    (dotimes(l 18)
-      (when (aref tabuleiro l c) 
+    (defun tabuleiro-altura-coluna(tabuleiro c)
+     (let ((altura 0))
+      (dotimes(l 18)
+       (when (aref tabuleiro l c) 
         (setf altura (- 18 l)) 
         (return)))
-    altura))
+      altura))
 
-(defun tabuleiro-linha-completa-p(tabuleiro l)
-  (let ((retorno T))  
-    (dotimes (columns 10)
-      ;(format t "~a ~a ~a"  retorno l columns)
-      (when (not (tabuleiro-preenchido-p tabuleiro l columns))
+    (defun tabuleiro-linha-completa-p(tabuleiro l)
+     (let ((retorno T))  
+      (dotimes (columns 10)
+       ;(format t "~a ~a ~a"  retorno l columns)
+       (when (not (tabuleiro-preenchido-p tabuleiro l columns))
         (setf retorno NIL)
         (return)))
-    retorno))
+      retorno))
 
-(defun tabuleiro-preenche! (tabuleiro l c)
-  (if (and (<= l 17) (<= c 9)) 
-    (setf (aref tabuleiro (- 17 l) c) T))T)
+    (defun tabuleiro-preenche! (tabuleiro l c)
+     (if (and (< l 18) (< c 10)) 
+      (setf (aref tabuleiro (- 17 l) c) T))
+     T)
 
-(defun tabuleiro-despreenche (tabuleiro l c)
-  (setf (aref tabuleiro (- 17 l) c) NIL))
+    (defun tabuleiro-despreenche (tabuleiro l c)
+     (setf (aref tabuleiro (- 17 l) c) NIL))
 
-(defun tabuleiro-remove-linha!(tabuleiro l)
-  (dotimes(c 10)
-    (tabuleiro-despreenche tabuleiro l c)))
+    (defun tabuleiro-remove-linha!(tabuleiro l)
+        (if (= l 17)
+            (dotimes(c 10)
+                (tabuleiro-despreenche tabuleiro l c))
+            (progn 
+                (dotimes (c 10)
+                    (setf (aref tabuleiro (- 17 l) c) (aref tabuleiro (1- (- 17 l)) c)))
+                (tabuleiro-remove-linha! tabuleiro (1+ l)))))
 
-(defun tabuleiro-topo-preenchido-p(tabuleiro)
-  (dotimes(columns 10 NIL)
-    (when (aref tabuleiro 0 columns)
-      ;(setf p T)
-      (return T))
-    ))
 
-(defun tabuleiros-iguais-p (tabuleiro1 tabuleiro2)
-  (equalp tabuleiro1 tabuleiro2))
+    (defun tabuleiro-topo-preenchido-p(tabuleiro)
+     (dotimes(columns 10 NIL)
+      (when (aref tabuleiro 0 columns)
+       ;(setf p T)
+       (return T))
+     ))
 
-(defun tabuleiro->array(tabuleiro)
-  (copia-tabuleiro tabuleiro))
+    (defun tabuleiros-iguais-p (tabuleiro1 tabuleiro2)
+     (equalp tabuleiro1 tabuleiro2))
 
-(defun array->tabuleiro(array)      
-  (let ((tabuleiro NIL))
-    (setf tabuleiro (copia-tabuleiro array))
-    tabuleiro))
+    (defun tabuleiro->array(tabuleiro)
+     (copia-tabuleiro tabuleiro))
 
-(defun cria-estado(p ppc pc tab)
-  (make-estado :pontos p :pecas-por-colocar ppc :pecas-colocadas pc :tabuleiro tab))
+    (defun array->tabuleiro(array)      
+     (let ((tabuleiro NIL))
+      (setf tabuleiro (copia-tabuleiro array))
+      tabuleiro))
 
-(defun copia-estado(eo)
-  (make-estado :pontos (estado-pontos eo) 
-               :pecas-por-colocar (copy-list (estado-pecas-por-colocar eo)) 
-               :pecas-colocadas (copy-list (estado-pecas-colocadas eo)) 
-               :tabuleiro (copia-tabuleiro (estado-tabuleiro eo))))
+    (defun cria-estado(p ppc pc tab)
+     (make-estado :pontos p :pecas-por-colocar ppc :pecas-colocadas pc :tabuleiro tab))
 
-(defun estados-iguais-p(estado1 estado2)
-  (and (eql(estado-pontos estado1)(estado-pontos estado2)) 
-       (eql(estado-pecas-por-colocar estado1)(estado-pecas-por-colocar estado2))
-       (eql(estado-pecas-colocadas estado1)(estado-pecas-colocadas estado2))
-       (eql(estado-tabuleiro estado1) (estado-tabuleiro estado2))))
+    (defun copia-estado(eo)
+     (make-estado :pontos (estado-pontos eo) 
+      :pecas-por-colocar (copy-list (estado-pecas-por-colocar eo)) 
+      :pecas-colocadas (copy-list (estado-pecas-colocadas eo)) 
+      :tabuleiro (copia-tabuleiro (estado-tabuleiro eo))))
 
-(defun estado-final-p(estado)
-  (or (tabuleiro-topo-preenchido-p (estado-tabuleiro estado)) 
+    (defun estados-iguais-p(estado1 estado2)
+     (and (eql(estado-pontos estado1)(estado-pontos estado2)) 
+      (eql(estado-pecas-por-colocar estado1)(estado-pecas-por-colocar estado2))
+      (eql(estado-pecas-colocadas estado1)(estado-pecas-colocadas estado2))
+      (eql(estado-tabuleiro estado1) (estado-tabuleiro estado2))))
+
+    (defun estado-final-p(estado)
+     (or (tabuleiro-topo-preenchido-p (estado-tabuleiro estado)) 
       (eql(estado-pecas-por-colocar estado) NIL)))
 
-(defun solucao(estado)
-  (and(not(tabuleiro-topo-preenchido-p (estado-tabuleiro estado))) 
-    (eql(estado-pecas-por-colocar estado) NIL)))
+    (defun solucao(estado)
+     (and(not(tabuleiro-topo-preenchido-p (estado-tabuleiro estado))) 
+      (eql(estado-pecas-por-colocar estado) NIL)))
 
-(defun qualpeca(peca)
-  (let ((lista nil))
-        (when (equal peca 'i) (setf lista (list peca-i0 peca-i1) ))
-        (when (equal peca 'l) (setf lista (list peca-l0 peca-l1 peca-l2 peca-l3) ))
-        (when (equal peca 'j) (setf lista (list peca-j0 peca-j1 peca-j2 peca-j3) ))
-        (when (equal peca 'o) (setf lista (list peca-o0) ))
-        (when (equal peca 's) (setf lista (list peca-s0 peca-s1) ))
-        (when (equal peca 'z) (setf lista (list peca-z0 peca-z1) ))
-        (when (equal peca 't) (setf lista (list peca-t0 peca-t1 peca-t2 peca-t3) ))
-       lista))
+    (defun qualpeca(peca)
+     (let ((lista nil))
+      (when (equal peca 'i) (setf lista (list peca-i0 peca-i1) ))
+      (when (equal peca 'l) (setf lista (list peca-l0 peca-l1 peca-l2 peca-l3) ))
+      (when (equal peca 'j) (setf lista (list peca-j0 peca-j1 peca-j2 peca-j3) ))
+      (when (equal peca 'o) (setf lista (list peca-o0) ))
+      (when (equal peca 's) (setf lista (list peca-s0 peca-s1) ))
+      (when (equal peca 'z) (setf lista (list peca-z0 peca-z1) ))
+      (when (equal peca 't) (setf lista (list peca-t0 peca-t1 peca-t2 peca-t3) ))
+      lista))
 
-;(defun accoes(estado)
-;     (let ((listapecas nil)(numerodepecasatestar 0)
-;
-;    (listapecas (qualpeca(car(estado-pecas-por-colocar estado))))
-;
-;    (numeropecasatestar (length listapecas))
-;
-;    (largurapeca (array-dimension(car(listapecas))))
-;    (dotimes (i numerodepecasatestar)
-;      (dotimes (j 10)
-;        (dotimes (p largurapeca)
-;          (and (when (aref (estado-tabuleiro estado) 0 (j+p) NIL))
-;               (when (aref (car(listapecas) 0 p)))
-;               (1+ pode))
-;          (and (when (aref (estado-tabuleiro estado) 0 (j+p) NIL)
-;               (when (aref (car(listapecas) 0 p NIL)
-;              (1+ pode))
-;                 ))))
-;          (if eq(pode largurapeca)
-;            (progn(;ADICIONARALISTAACCOES)(pop listapecas)
-;            (pop listapecas))))
-;       )))))
-
-
-(defun qualidade(estado)
-  (- (estado-pontos estado)))
+    ;(defun accoes(estado)
+            ;     (let ((listapecas nil)(numerodepecasatestar 0)
+                    ;
+                    ;    (listapecas (qualpeca(car(estado-pecas-por-colocar estado))))
+                    ;
+                    ;    (numeropecasatestar (length listapecas))
+                    ;
+                    ;    (largurapeca (array-dimension(car(listapecas))))
+                    ;    (dotimes (i numerodepecasatestar)
+                        ;      (dotimes (j 10)
+                            ;        (dotimes (p largurapeca)
+                                ;          (and (when (aref (estado-tabuleiro estado) 0 (j+p) NIL))
+                                    ;               (when (aref (car(listapecas) 0 p)))
+                                    ;               (1+ pode))
+                                ;          (and (when (aref (estado-tabuleiro estado) 0 (j+p) NIL)
+                                        ;               (when (aref (car(listapecas) 0 p NIL)
+                                                ;              (1+ pode))
+                                            ;                 ))))
+                            ;          (if eq(pode largurapeca)
+                                ;            (progn(;ADICIONARALISTAACCOES)(pop listapecas)
+                                    ;            (pop listapecas))))
+                        ;       )))))
 
 
-; Notas do CALISTO
-; --> Cardoso (ou quem fez isto) acho que nao e bem assim
-; deves percorrer o tabuleiro e fazeres o calculo dos pontos
-; dependendo do num de linhas e tendo em conta se as linhas
-; sao ou nao removidas
-
-(defun calculapontosporpeca(peca)
-  (let ((retorno 0))
-  (when(eq peca 'i) (setf retorno 800))
-  (when(eq peca 'j) (setf retorno 500))
-  (when(eq peca 'l) (setf retorno 500))
-  (when(eq peca 's) (setf retorno 300))
-  (when(eq peca 'z) (setf retorno 300))
-  (when(eq peca 't) (setf retorno 300))
-  (when(eq peca 'o) (setf retorno 300))
-  retorno))
-
-;(defun custo-oportunidade(estado)
-;  (let ( (pontosmaximo 0)(listalocal nil) )
-;  (setq listalocal (copy-list (estado-pecas-colocadas estado)))
-
-;  (loop for x in listalocal
-;        do ( (+ pontosmaximo  (calculapontosporpeca x ) )))
-;  pontosmaximo))
+    (defun qualidade(estado)
+     (- (estado-pontos estado)))
 
 
-; ======================================================================================= ;
-;                                        CARE by CALISTO                                  ;
-; ======================================================================================= ;
+    ; Notas do CALISTO
+    ; --> Cardoso (ou quem fez isto) acho que nao e bem assim
+    ; deves percorrer o tabuleiro e fazeres o calculo dos pontos
+    ; dependendo do num de linhas e tendo em conta se as linhas
+    ; sao ou nao removidas
 
-; (defun resultado(estado accao)
-;   ; o estado nao pode ser novo, tem que ser copiado
-;   (let ((novo-estado (copia-estado estado))
-;       ; peca colocada em col
-;         (col (first accao))
-;         ; pc == peca
-;         (pc (rest accao))
-;         ; topo da coluna
-;         ; (coluna-topo (tabuleiro-altura-coluna (estado-tabuleiro novo-estado) c))
-;         ; altura max onde pode ser colocada a peca
-;         (max-altura (tabuleiro-altura-coluna (estado-tabuleiro estado) (first accao))))
-    
-;     ; loop que faz descer altura da pc caso tenha elementos a NIL na col 1
-;     (loop for l from 0 upto (1- (array-dimension pc 0)) do
-;       ; caso em que o elemento da peca a NIL
-;       (if (not (aref pc l 0))
-;         ; decrementa altura
-;         (1+ max-altura)
-;         (return)))
-    
-;     ;ciclo para descer a altura da pc se tiver elementos
-;     ; a NIL nas restantes colunas (de 2 ate a ultima)
-;     (loop for c from (1+ col) upto (1- (+ col (array-dimension pc 1))) do
-;       ; verificacao do topo da coluna para maior que o topo da anterior
-;       (if (> (tabuleiro-altura-coluna (estado-tabuleiro novo-estado) c) max-altura)
-;         ; update a altura (progn para fazer isso tudo)
-;         (progn (setf max-altura (tabuleiro-altura-coluna (estado-tabuleiro novo-estado) c))
-;               ; ciclo para descer a altura da peca se tiver elementos
-;               ; a NIL na coluna respectiva (- c coluna)
-;               (loop for l from 0 upto (1- (array-dimension pc 0)) do
-;                 ; caso o elemento da peca for NIL
-;                 (if (not (aref pc l (- c col)))
-;                   ; decrementa altura
-;                   (decf max-altura)
-;                   (return))))))
+    (defun calculapontosporpeca(peca)
+     (let ((retorno 0))
+      (when(eq peca 'i) (setf retorno 800))
+      (when(eq peca 'j) (setf retorno 500))
+      (when(eq peca 'l) (setf retorno 500))
+      (when(eq peca 's) (setf retorno 300))
+      (when(eq peca 'z) (setf retorno 300))
+      (when(eq peca 't) (setf retorno 300))
+      (when(eq peca 'o) (setf retorno 300))
+      retorno))
 
-;     ; loop para preencher o tabuleiro com uma dada peca
-;     (loop for l from max-altura upto (min 17 (1- (+ max-altura (array-dimension pc 0)))) do
-;       (loop for c from col upto (1- (+ col (array-dimension pc 1))) do
-;         (if (aref pc (- l max-altura) (- c col))
-;           (setf (aref (estado-tabuleiro novo-estado) l c) (aref pc (- l max-altura) (- c col))))))
-;     ; actualiza a lista das pecas-colocadas
-;     (push (first (estado-pecas-por-colocar novo-estado)) (estado-pecas-colocadas novo-estado))
-;     ;retira a peca colocada da lista das pecas por-colocar
-;     (pop (estado-pecas-por-colocar novo-estado))
-;     novo-estado))
+    ;(defun custo-oportunidade(estado)
+            ;  (let ( (pontosmaximo 0)(listalocal nil) )
+                ;  (setq listalocal (copy-list (estado-pecas-colocadas estado)))
 
-; ======================================================================================= ;
-;                                  END - CARE by CALISTO                                  ;
-; ======================================================================================= ;
+                ;  (loop for x in listalocal
+                    ;        do ( (+ pontosmaximo  (calculapontosporpeca x ) )))
+                ;  pontosmaximo))
 
-; NOTA: o codigo que se segue e apenas uma ideia...
-; by Calisto --> CARE
 
-; (defun custo-oportunidade(estado)
-;   (let ((max-pontos 0)
-;         (pcs (estado-pecas-colocadas estado))
-;         (altura 0))
-;       (cond ((eq peca 'i) (setf max-pontos (+ max-pontos 800)))
-;             ((eq peca 'j) (setf max-pontos (+ max-pontos 500)))
-;             ((eq peca 'l) (setf max-pontos (+ max-pontos 500)))
-;             ((eq peca 's) (setf max-pontos (+ max-pontos 300)))
-;             ((eq peca 'z) (setf max-pontos (+ max-pontos 300)))
-;             ((eq peca 't) (setf max-pontos (+ max-pontos 300)))
-;             ((eq peca 'o) (setf max-pontos (+ max-pontos 300)))
-;           (T (- max-pontos (when (not (estado-pontos estado)) 0) (estado-pontos estado))))))
+    ; ======================================================================================= ;
+    ;                                        CARE by CALISTO                                  ;
+    ; ======================================================================================= ;
+
+    ; (defun resultado(estado accao)
+            ;   ; o estado nao pode ser novo, tem que ser copiado
+            ;   (let ((novo-estado (copia-estado estado))
+                    ;       ; peca colocada em col
+                    ;         (col (first accao))
+                    ;         ; pc == peca
+                    ;         (pc (rest accao))
+                    ;         ; topo da coluna
+                    ;         ; (coluna-topo (tabuleiro-altura-coluna (estado-tabuleiro novo-estado) c))
+                    ;         ; altura max onde pode ser colocada a peca
+                    ;         (max-altura (tabuleiro-altura-coluna (estado-tabuleiro estado) (first accao))))
+
+                ;     ; loop que faz descer altura da pc caso tenha elementos a NIL na col 1
+                ;     (loop for l from 0 upto (1- (array-dimension pc 0)) do
+                    ;       ; caso em que o elemento da peca a NIL
+                    ;       (if (not (aref pc l 0))
+                        ;         ; decrementa altura
+                        ;         (1+ max-altura)
+                        ;         (return)))
+
+                ;     ;ciclo para descer a altura da pc se tiver elementos
+                ;     ; a NIL nas restantes colunas (de 2 ate a ultima)
+                ;     (loop for c from (1+ col) upto (1- (+ col (array-dimension pc 1))) do
+                    ;       ; verificacao do topo da coluna para maior que o topo da anterior
+                    ;       (if (> (tabuleiro-altura-coluna (estado-tabuleiro novo-estado) c) max-altura)
+                        ;         ; update a altura (progn para fazer isso tudo)
+                        ;         (progn (setf max-altura (tabuleiro-altura-coluna (estado-tabuleiro novo-estado) c))
+                            ;               ; ciclo para descer a altura da peca se tiver elementos
+                            ;               ; a NIL na coluna respectiva (- c coluna)
+                            ;               (loop for l from 0 upto (1- (array-dimension pc 0)) do
+                                ;                 ; caso o elemento da peca for NIL
+                                ;                 (if (not (aref pc l (- c col)))
+                                    ;                   ; decrementa altura
+                                    ;                   (decf max-altura)
+                                    ;                   (return))))))
+
+                ;     ; loop para preencher o tabuleiro com uma dada peca
+                ;     (loop for l from max-altura upto (min 17 (1- (+ max-altura (array-dimension pc 0)))) do
+                        ;       (loop for c from col upto (1- (+ col (array-dimension pc 1))) do
+                            ;         (if (aref pc (- l max-altura) (- c col))
+                                ;           (setf (aref (estado-tabuleiro novo-estado) l c) (aref pc (- l max-altura) (- c col))))))
+                ;     ; actualiza a lista das pecas-colocadas
+                ;     (push (first (estado-pecas-por-colocar novo-estado)) (estado-pecas-colocadas novo-estado))
+                ;     ;retira a peca colocada da lista das pecas por-colocar
+                ;     (pop (estado-pecas-por-colocar novo-estado))
+                ;     novo-estado))
+
+                ; ======================================================================================= ;
+                ;                                  END - CARE by CALISTO                                  ;
+                ; ======================================================================================= ;
+
+                ; NOTA: o codigo que se segue e apenas uma ideia...
+                ; by Calisto --> CARE
+
+                ; (defun custo-oportunidade(estado)
+                        ;   (let ((max-pontos 0)
+                                ;         (pcs (estado-pecas-colocadas estado))
+                                ;         (altura 0))
+                            ;       (cond ((eq peca 'i) (setf max-pontos (+ max-pontos 800)))
+                                ;             ((eq peca 'j) (setf max-pontos (+ max-pontos 500)))
+                                ;             ((eq peca 'l) (setf max-pontos (+ max-pontos 500)))
+                                ;             ((eq peca 's) (setf max-pontos (+ max-pontos 300)))
+                                ;             ((eq peca 'z) (setf max-pontos (+ max-pontos 300)))
+                                ;             ((eq peca 't) (setf max-pontos (+ max-pontos 300)))
+                                ;             ((eq peca 'o) (setf max-pontos (+ max-pontos 300)))
+                                ;           (T (- max-pontos (when (not (estado-pontos estado)) 0) (estado-pontos estado))))))
+
+
 
 (load "utils.fas")
