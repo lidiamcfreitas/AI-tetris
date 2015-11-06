@@ -161,7 +161,7 @@
       (eql(estado-pecas-por-colocar estado) NIL)))
 
 ; ======================================================================================= ;
-;                       FUNCOES PROBLEMA PROCURA                                          ;
+;                                FUNCOES PROBLEMA PROCURA                                 ;
 ; ======================================================================================= ;
 
 ; ==================================== SOLUCAO ========================================== ;
@@ -219,14 +219,12 @@
            (pc (accao-peca accao))
            (max-altura 0)
            (pontos-extra 0)
-           (pontos-iniciais (estado-pontos novo-estado))
-           (novo-tabuleiro (estado-tabuleiro novo-estado))
            (counter 0))
     
       ; descobre em que posicao deve colocar a peca
       (dotimes (c (array-dimension pc 1))
        (setf altura-peca (peca-altura-coluna pc c))
-       (setf altura-tabuleiro  (tabuleiro-altura-coluna novo-tabuleiro (+ c col)))
+       (setf altura-tabuleiro  (tabuleiro-altura-coluna (estado-tabuleiro novo-estado) (+ c col)))
        (if (> (- altura-tabuleiro altura-peca) max-altura )
         (setf max-altura (- altura-tabuleiro altura-peca))))
 
@@ -234,17 +232,17 @@
     (loop for l from max-altura upto (min 17 (1- (+ max-altura (array-dimension pc 0)))) do
      (loop for c from col upto (1- (+ col (array-dimension pc 1))) do
       (if (aref pc (- l max-altura) (- c col))
-       (setf (aref novo-tabuleiro (- 17 l) c) (aref pc (- l max-altura) (- c col))))))
+       (setf (aref (estado-tabuleiro novo-estado) (- 17 l) c) (aref pc (- l max-altura) (- c col))))))
     
     ; retorna o estado se o topo estiver preenchido
-    (when (tabuleiro-topo-preenchido-p novo-tabuleiro)
+    (when (tabuleiro-topo-preenchido-p (estado-tabuleiro novo-estado))
      (return-from resultado novo-estado))
 
     ; conta o numero de linhas completas e apaga-as
      (dotimes (l (array-dimension pc 0))
-      (when (tabuleiro-linha-completa-p novo-tabuleiro (+ max-altura l))
+      (when (tabuleiro-linha-completa-p (estado-tabuleiro novo-estado) (+ max-altura l))
        (incf counter)
-       (tabuleiro-remove-linha! novo-tabuleiro (+ max-altura l))
+       (tabuleiro-remove-linha! (estado-tabuleiro novo-estado) (+ max-altura l))
        (decf max-altura)))
     
     ; atribui os pontos pelas novas linhas
@@ -252,7 +250,7 @@
       ((= counter 2) (setf pontos-extra 300))
       ((= counter 3) (setf pontos-extra 500))
       ((> counter 3) (setf pontos-extra 800)))
-     (setf pontos-iniciais (+ pontos-iniciais pontos-extra))
+     (setf (estado-pontos novo-estado) (+ (estado-pontos novo-estado) pontos-extra))
 
     ; actualiza a lista das pecas-colocadas
     (push (first (estado-pecas-por-colocar novo-estado)) (estado-pecas-colocadas novo-estado))
