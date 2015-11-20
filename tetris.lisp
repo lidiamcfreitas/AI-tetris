@@ -288,5 +288,29 @@
        (setf pontos-maximo (+ (calcula-pontos-por-peca x) pontos-maximo)))
       (- pontos-maximo (estado-pontos estado))))
 
+
+;(defun problema-pp (_problema)
+;  (cond ((solucao (problema-estado _problema)(problema-caminho _problema))
+;  		(estado-final-p (problema-estado _problema))
+;  	(reverse(cons start been-list)))
+
+;  	(t (try-moves (problema-tabuleiro _problema)  (solucao _problema) been-list (problema-accoes _problema) (problema-accoes _problema) ))))
+
+
+;(defun try-moves (start goal been-list moves-to-try moves)
+;  (cond ((null moves-to-try) nil)
+;        ((member start been-list :test #'equal) nil)
+;        (t (let ((child (funcall (car moves-to-try) start)))
+;             (if child 
+;               (or (depth-first-search (funcall (car moves-to-try) start)
+;                                       goal
+;                                       (cons start been-list)
+;                                       moves)
+;                   (try-moves start goal been-list (cdr moves-to-try) moves))
+;               (try-moves start goal been-list (cdr moves-to-try) moves))))))
+
+
+
+
     (load "utils.fas")
 
