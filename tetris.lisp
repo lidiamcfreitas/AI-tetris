@@ -62,6 +62,7 @@
         (setf (aref tabuleiro-novo i j) (aref tabuleiro-arg i j))))
       tabuleiro-novo))
 
+
     (defun tabuleiro-preenchido-p (tabuleiro l c)
       "retorna o valor logico T se a posicao (l,c) do tabuleiro estiver preenchida e NIL
        c.c." 
@@ -119,9 +120,13 @@
       "devolve o valor logico T se os dois tabuleiros forem iguais e NIL c.c."
      (equalp tabuleiro1 tabuleiro2))
 
-    (defun tabuleiro->array(tabuleiro)
-     "retorna um tabuleiro igual ao recebido em formato de array"
-     (copia-tabuleiro tabuleiro))
+    (defun tabuleiro->array(tabuleiro-arg)
+     (let ((linhas 18)(tabuleiro-novo nil) (colunas 10))
+      (setf tabuleiro-novo (make-array (list linhas colunas)))
+      (dotimes (i linhas)
+       (dotimes (j colunas)
+        (setf (aref tabuleiro-novo (- 17 i) j) (aref tabuleiro-arg i j))))
+      tabuleiro-novo))
 
     (defun array->tabuleiro(array)
      "converte um tabuleiro em formato array para o formato da implementacao do codigo"     
@@ -189,6 +194,9 @@
      "recebe um estado e retorna uma lista de todas as accoes validas que podem ser 
      feitas com a proxima peca a ser colocada"
      (let ((lista-pecas nil)(numero-pecas-a-testar 0)(largura-peca 0)(retorno (list)))
+
+
+
       (setf lista-pecas (qual-peca (car(estado-pecas-por-colocar estado)) ))
       (setf numero-pecas-a-testar (length lista-pecas))
       (dotimes (i numero-pecas-a-testar)
@@ -197,6 +205,7 @@
         (when (< (+ j largura-peca) 11)
          (push  (cria-accao j (car lista-pecas)) retorno)))
        (pop lista-pecas))
+      (when (estado-final-p estado) (setf retorno nil))
       (reverse retorno)))
     
 ; ==================================== RESULTADO ======================================== ; 
@@ -310,25 +319,25 @@
 ;               (try-moves start goal been-list (cdr moves-to-try) moves))))))
 
 
-(defun procura-pp (problema)
-   (let ((pred NIL)
-        (accoes (problema-accoes problema))
-        (solucao (problema-solucao problema))
-        (resultado (problema-resultado problema))
-        (estado-inicial (problema-estado-inicial problema)))
-      ; labels e equivalente a flet excepto que o ambito dos nomes das funcoes definidas
-      ; para etiquetas engloba a funcao com definicoes de si mesma, bem como o corpo.
-      (labels ((dfsaux (estado)
-        (let ((aux NIL))
-           (if (solucao estado)
-            (setf pred T))
-          (if (estado-final-p estado)
-            (return-from dfsaux NIL))
-            (dolist (accao (accoes estado-inicial))
-              (setf aux (dfsaux (resultado estado accao)))
-              (if pred
-                (return-from dfsaux (cons accao aux))))
-                NIL)))
-        (dfsaux estado-inicial))))
+;;(defun procura-pp (problema)
+;;   (let ((pred NIL)
+;;        (accoes (problema-accoes problema))
+;;        (solucao (problema-solucao problema))
+;        (resultado (problema-resultado problema))
+;        (estado-inicial (problema-estado-inicial problema)))
+;      ; labels e equivalente a flet excepto que o ambito dos nomes das funcoes definidas
+;      ; para etiquetas engloba a funcao com definicoes de si mesma, bem como o corpo.
+;      (labels ((dfsaux (estado)
+;        (let ((aux NIL))
+;           (if (solucao estado)
+;            (setf pred T))
+;          (if (estado-final-p estado)
+;            (return-from dfsaux NIL))
+;            (dolist (accao (accoes estado-inicial))
+;              (setf aux (dfsaux (resultado estado accao)))
+;              (if pred
+;                (return-from dfsaux (cons accao aux))))
+;                NIL)))
+;        (dfsaux estado-inicial))))
 
     (load "utils.lisp")
