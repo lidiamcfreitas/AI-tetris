@@ -297,47 +297,24 @@
        (setf pontos-maximo (+ (calcula-pontos-por-peca x) pontos-maximo)))
       (- pontos-maximo (estado-pontos estado))))
 
-
-;(defun problema-pp (_problema)
-;  (cond ((solucao (problema-estado _problema)(problema-caminho _problema))
-;  		(estado-final-p (problema-estado _problema))
-;  	(reverse(cons start been-list)))
-
-;  	(t (try-moves (problema-tabuleiro _problema)  (solucao _problema) been-list (problema-accoes _problema) (problema-accoes _problema) ))))
-
-
-;(defun try-moves (start goal been-list moves-to-try moves)
-;  (cond ((null moves-to-try) nil)
-;        ((member start been-list :test #'equal) nil)
-;        (t (let ((child (funcall (car moves-to-try) start)))
-;             (if child 
-;               (or (depth-first-search (funcall (car moves-to-try) start)
-;                                       goal
-;                                       (cons start been-list)
-;                                       moves)
-;                   (try-moves start goal been-list (cdr moves-to-try) moves))
-;               (try-moves start goal been-list (cdr moves-to-try) moves))))))
-
-
-;;(defun procura-pp (problema)
-;;   (let ((pred NIL)
-;;        (accoes (problema-accoes problema))
-;;        (solucao (problema-solucao problema))
-;        (resultado (problema-resultado problema))
-;        (estado-inicial (problema-estado-inicial problema)))
-;      ; labels e equivalente a flet excepto que o ambito dos nomes das funcoes definidas
-;      ; para etiquetas engloba a funcao com definicoes de si mesma, bem como o corpo.
-;      (labels ((dfsaux (estado)
-;        (let ((aux NIL))
-;           (if (solucao estado)
-;            (setf pred T))
-;          (if (estado-final-p estado)
-;            (return-from dfsaux NIL))
-;            (dolist (accao (accoes estado-inicial))
-;              (setf aux (dfsaux (resultado estado accao)))
-;              (if pred
-;                (return-from dfsaux (cons accao aux))))
-;                NIL)))
-;        (dfsaux estado-inicial))))
+(defun procura-pp (problema)
+   (let ((pred NIL)(accoes (problema-accoes problema))
+   		(solucao (problema-solucao problema))
+       (resultado (problema-resultado problema))
+       (estado-inicial (problema-estado-inicial problema)) )
+     ; labels e equivalente a flet excepto que o ambito dos nomes das funcoes definidas
+     ; para etiquetas engloba a funcao com definicoes de si mesma, bem como o corpo.
+     (labels ((dfsaux (estado)
+       (let ((aux NIL))
+          (when (solucao estado)
+           (setf pred T))
+         (if (estado-final-p estado)
+           (return-from dfsaux NIL))
+           (dolist (accao (accoes estado-inicial))
+             (setf aux (dfsaux (resultado estado accao)))
+             (if pred
+               (return-from dfsaux (cons accao aux))))
+               NIL)))
+       (dfsaux estado-inicial))))
 
     (load "utils.lisp")
