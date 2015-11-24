@@ -297,54 +297,39 @@
        (setf pontos-maximo (+ (calcula-pontos-por-peca x) pontos-maximo)))
       (- pontos-maximo (estado-pontos estado))))
 
-; (defun procura-pp (problema)
-;    (let ((pred NIL)
-;    		(accoes (problema-accoes problema))
-;    		(solucao (problema-solucao problema))
-;        	(resultado (problema-resultado problema))
-;        	(estado-inicial (problema-estado-inicial problema)))
-;      ; labels e equivalente a flet excepto que o ambito dos nomes das funcoes definidas
-;      ; para etiquetas engloba a funcao com definicoes de si mesma, bem como o corpo.
-;      (labels ((dfsaux (estado)
-;        (let ((aux NIL))
-;           (if (solucao estado)
-;            (setf pred T))
-;           (if (estado-final-p estado)
-;            (return-from dfsaux NIL))
-;            (dolist (accao (accoes estado-inicial))
-;              (setf aux (dfsaux (resultado estado accao)))
-;              (if pred
-;                (return-from dfsaux (cons accao aux))))
-;                NIL)))
-;        (dfsaux estado-inicial))))
+; (defstruct elemento
+; 	valor
+; 	estado
+; 	accoes)
 
-; (defun linha-livre? (estado linha)
-; 	(eq (aref estado linha) NIL))
+;     ; stable-sort: http://clhs.lisp.se/Body/f_sort_.htm
+;     (defun ordenado (n lst)
+;     	; nconc: http://www.lispworks.com/documentation/lw60/CLHS/Body/f_nconc.htm
+;     	(stable-sort (nconc n lst)
+;     		         #'(lambda (x y) (< (elemento-valor x) (elemento-valor y)))))
 
-; (defun gera-sucessores (tabuleiro)
-; 	(dotimes (linha (length tabuleiro))
-; 		(when (tabuleiro-linha-completa-p tabuleiro linha)
-; 			(return-form gera-sucessores
-; 				(cenas-na-linha tabuleiro linha)))))
-
-; (defun procura-pp (problema)
-; 	(let ((sucessores NIL)
-; 		 (estado-actual (problema-estado-inicial problema)))
-; 		(setf sucessores
-; 			(gera-sucessores (funcall (problema-accoes problema) estado-actual)
-; 				estado-actual
-; 				problema))
-; 		(loop (if (null sucessores)
-; 				(return-from procura-pp NIL)
-; 				(progn
-; 					(setq estado-actual (car sucessores))
-; 					(if (funcall (solucao problema) estado-actual)
-; 						(return-from procura-pp (car estado-actual))
-; 						(progn
-; 							(setf sucessores
-; 								(append (gera-sucessores
-; 									(funcall (problema-accoes problema) estado-actual)
-; 									estado-actual problema)
-; 								(cdr sucessores))))))))))
+;     (defun procura-A* (problema heuristica)
+;     	(let ((estado-actual (problema-estado-inicial problema))
+;     		 (resultado (problema-resultado problema))
+;     		 (solucao (problema-solucao problema))
+;     		 (accoes (problema-accoes problema))
+;     		 (accao-actual NIL)
+;     		 (lista-abertos NIL)
+;     		 (numero-abertos NIL)
+;     		 (novo-estado NIL))
+;     		(loop (when (solucao estado-actual)
+;     					; nreverse: http://clhs.lisp.se/Body/f_revers.htm
+;     					(return-from procura-A* (nreverse accao-actual)))
+;     			(dolist (accao (accoes estado-actual))
+;     				(setf novo-estado (cons (make-element
+;     					:valor (+ (custo-caminho novo-estado) (heuristica novo-estado))
+;     					:estado novo-estado
+;     					:accoes (cons accao accao-actual))
+;     					numero-abertos)))
+;     			(setf lista-abertos (ordenado numero-abertos list-abertos))
+;     		   	(setf proximo-elemento (car lista-abertos))
+;     		   	(setf lista-abertos (cdr lista-abertos))
+;     		   	(setf estado-actual (eleento-estado proximo-elemento))
+;     		   	(setf accao-actual (elemento-accoes proximo-elemento)))))
 
     (load "utils.lisp")
