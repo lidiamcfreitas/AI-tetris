@@ -31,11 +31,11 @@
                     (setf (nth largest heap-list) aux)
                     (heapify heap-list largest n)))))
 
-;(defun build-heap (heap-list)
-;    (let (  (len (heap-length heap-list) ) 
-;            (upvalue (/ (heap-length heap-list) 2)))
-;        (loop for i from upvalue downto 0 do (
-;            (heapify heap-list i len)))))
+(defun build-heap (heap-list)
+   (let (  (len (heap-length heap-list) ) 
+           (upvalue (/ (heap-length heap-list) 2)))
+       (loop for i from upvalue downto 0 do
+        (heapify heap-list i len))))
 
 
 
