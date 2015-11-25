@@ -226,14 +226,15 @@
 
     (defun resultado(estado accao)
      "devolve um estado novo que consiste em aplicar a accao recebida ao estado original"
-     (let ((novo-estado (copia-estado estado))
-           (altura-peca nil)
+     (let ((novo-estado     (copia-estado estado))
+           (altura-peca     nil)
            (altura-tabuleiro nil) 
-           (col (accao-coluna accao))
-           (pc (accao-peca accao))
-           (max-altura 0)
-           (pontos-extra 0)
-           (counter 0))
+           (col             (accao-coluna accao))
+           (pc              (accao-peca accao))
+           (max-altura      0)
+           (pontos-extra    0)
+           (counter         0)
+           (peca-pos        nil))
     
       ; descobre em que posicao deve colocar a peca
       (dotimes (c (array-dimension pc 1))
@@ -245,8 +246,9 @@
     ; loop para preencher o tabuleiro com uma dada peca
     (loop for l from max-altura upto (min 17 (1- (+ max-altura (array-dimension pc 0)))) do
      (loop for c from col upto (1- (+ col (array-dimension pc 1))) do
-      (if (aref pc (- l max-altura) (- c col))
-       (setf (aref (estado-tabuleiro novo-estado) (- 17 l) c) (aref pc (- l max-altura) (- c col))))))
+      (setf peca-pos (aref pc (- l max-altura) (- c col)))
+      (if peca-pos
+       (tabuleiro-preenche! (estado-tabuleiro novo-estado) l c))))
     
     ; retorna o estado se o topo estiver preenchido
     (when (tabuleiro-topo-preenchido-p (estado-tabuleiro novo-estado))
@@ -310,7 +312,6 @@
             (resultado          nil)
             (dfs-resultado      nil)
             (res                nil))
-
         (labels 
             ((dfs (estado)
                 (cond ((funcall f-solucao estado) (return-from dfs '())) 
@@ -361,11 +362,12 @@
     		   	(setf estado-actual (elemento-estado proximo-elemento))
     		   	(setf accao-actual (elemento-accoes proximo-elemento)))))
 
-(load "utils.lisp")
-
 
 
 ; (defstruct elemento
 ; 	(valor NIL)
 ; 	(estado NIL)
 ; 	(accoes NIL))
+
+(load "utils.fas")
+
