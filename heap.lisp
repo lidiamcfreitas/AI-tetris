@@ -10,26 +10,29 @@
 
 (defun heap-length (heap) (length heap))
 
-(defun heapify (heap-list i n)
-    (let (  (left       (left i))
-            (right      (right i))
-            (largest    -1)
-            (aux        nil))
+;; These could be made inline
 
-            (if (>= left (nth i heap-list)) 
-                (setf largest left)
-                (setf largest i))
+(defun heap-val (heap i key) (declare (fixnum i)) (funcall key (aref heap i)))
+(defun heap-parent (i) (declare (fixnum i)) (floor (- i 1) 2))
+(defun heap-left (i) (declare (fixnum i)) (the fixnum (+ 1 i i)))
+(defun heap-right (i) (declare (fixnum i)) (the fixnum (+ 2 i i)))
 
-            (if (>= right (nth i heap-list))
-                (setf largest right))
-
-            (if (not (eq largest i))
-                ; swap
-                (progn
-                    (setf aux (nth i heap-list))
-                    (setf (nth i heap-list) (nth largest heap-list))
-                    (setf (nth largest heap-list) aux)
-                    (heapify heap-list largest n)))))
+(defun heapify (heap i key)
+  "Assume that the children of i are heaps, but that heap[i] may be 
+  larger than its children.  If it is, move heap[i] down where it belongs.
+  [Page 143 CL&R]."
+  (let ((l (heap-left i))
+    (r (heap-right i))
+    (N (- (length heap) 1))
+    smallest)
+    (setf smallest (if (and (<= l N) (<= (heap-val heap l key)
+                     (heap-val heap i key)))
+               l i))
+    (if (and (<= r N) (<= (heap-val heap r key) (heap-val heap smallest key)))
+    (setf smallest r))
+    (when (/= smallest i)
+      (rotatef (aref heap i) (aref heap smallest))
+      (heapify heap smallest key))))
 
 (defun build-heap (heap-list)
    (let (  (len (heap-length heap-list) ) 
