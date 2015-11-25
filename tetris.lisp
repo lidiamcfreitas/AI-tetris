@@ -297,27 +297,61 @@
        (setf pontos-maximo (+ (calcula-pontos-por-peca x) pontos-maximo)))
       (- pontos-maximo (estado-pontos estado))))
 
-
  (defun procura-pp (problema)
     (let (  (estado-inicial (problema-estado-inicial problema))
             (f-solucao          (problema-solucao problema))
             (f-accoes           (problema-accoes problema))
             (f-resultado        (problema-resultado problema))
             (resultado          nil)
-            (dfs-resultado      nil))
+            (dfs-resultado      nil)
+            (res                nil))
 
         (labels 
             ((dfs (estado)
-                ; (print estado)
                 (cond ((funcall f-solucao estado) (return-from dfs '())) 
                     (t (dolist (accao (reverse (funcall f-accoes estado)))
-                        ; (print "accao: ")
-                        ; (print accao)
                         (setf resultado (funcall f-resultado estado accao))
                         (setf dfs-resultado (dfs resultado))
                         (if (not (eq 'impossivel dfs-resultado))
                             (return-from dfs (append (list accao) dfs-resultado))))))
                 'impossivel))
-        (dfs estado-inicial))))
+        (setf res (dfs estado-inicial))
+        (if (eq 'impossivel res) nil res))))
+
+; (defstruct elemento
+; 	valor
+; 	estado
+; 	accoes)
+
+;     ; stable-sort: http://clhs.lisp.se/Body/f_sort_.htm
+;     (defun ordenado (n lst)
+;     	; nconc: http://www.lispworks.com/documentation/lw60/CLHS/Body/f_nconc.htm
+;     	(stable-sort (nconc n lst)
+;     		         #'(lambda (x y) (< (elemento-valor x) (elemento-valor y)))))
+
+;     (defun procura-A* (problema heuristica)
+;     	(let ((estado-actual (problema-estado-inicial problema))
+;     		 (resultado (problema-resultado problema))
+;     		 (solucao (problema-solucao problema))
+;     		 (accoes (problema-accoes problema))
+;     		 (accao-actual NIL)
+;     		 (lista-abertos NIL)
+;     		 (numero-abertos NIL)
+;     		 (novo-estado NIL))
+;     		(loop (when (solucao estado-actual)
+;     					; nreverse: http://clhs.lisp.se/Body/f_revers.htm
+;     					(return-from procura-A* (nreverse accao-actual)))
+;     			(dolist (accao (accoes estado-actual))
+;     				(setf novo-estado (cons (make-element
+;     					:valor (+ (custo-caminho novo-estado) (heuristica novo-estado))
+;     					:estado novo-estado
+;     					:accoes (cons accao accao-actual))
+;     					numero-abertos)))
+;     			(setf lista-abertos (ordenado numero-abertos list-abertos))
+;     		   	(setf proximo-elemento (car lista-abertos))
+;     		   	(setf lista-abertos (cdr lista-abertos))
+;     		   	(setf estado-actual (eleento-estado proximo-elemento))
+;     		   	(setf accao-actual (elemento-accoes proximo-elemento)))))
 
 (load "utils.lisp")
+
