@@ -37,5 +37,3 @@
         (loop for i from upvalue downto 0 do 
             (heapify heap-list i))))
 
-
-
