@@ -18,6 +18,11 @@
      (resultado NIL)
      (custo-caminho NIL))
 
+    (defstruct elemento
+		(valor NIL)
+		(estado NIL)
+		(accoes NIL))
+
 ; ======================================================================================= ;
 ; ======================================================================================= ;
 ;                                                                                         ;
@@ -318,40 +323,49 @@
         (setf res (dfs estado-inicial))
         (if (eq 'impossivel res) nil res))))
 
-; (defstruct elemento
-; 	valor
-; 	estado
-; 	accoes)
 
-;     ; stable-sort: http://clhs.lisp.se/Body/f_sort_.htm
-;     (defun ordenado (n lst)
-;     	; nconc: http://www.lispworks.com/documentation/lw60/CLHS/Body/f_nconc.htm
-;     	(stable-sort (nconc n lst)
-;     		         #'(lambda (x y) (< (elemento-valor x) (elemento-valor y)))))
 
-;     (defun procura-A* (problema heuristica)
-;     	(let ((estado-actual (problema-estado-inicial problema))
-;     		 (resultado (problema-resultado problema))
-;     		 (solucao (problema-solucao problema))
-;     		 (accoes (problema-accoes problema))
-;     		 (accao-actual NIL)
-;     		 (lista-abertos NIL)
-;     		 (numero-abertos NIL)
-;     		 (novo-estado NIL))
-;     		(loop (when (solucao estado-actual)
-;     					; nreverse: http://clhs.lisp.se/Body/f_revers.htm
-;     					(return-from procura-A* (nreverse accao-actual)))
-;     			(dolist (accao (accoes estado-actual))
-;     				(setf novo-estado (cons (make-element
-;     					:valor (+ (custo-caminho novo-estado) (heuristica novo-estado))
-;     					:estado novo-estado
-;     					:accoes (cons accao accao-actual))
-;     					numero-abertos)))
-;     			(setf lista-abertos (ordenado numero-abertos list-abertos))
-;     		   	(setf proximo-elemento (car lista-abertos))
-;     		   	(setf lista-abertos (cdr lista-abertos))
-;     		   	(setf estado-actual (eleento-estado proximo-elemento))
-;     		   	(setf accao-actual (elemento-accoes proximo-elemento)))))
+    ; stable-sort: http://clhs.lisp.se/Body/f_sort_.htm
+    (defun ordenado (n lst)
+    	; nconc: http://www.lispworks.com/documentation/lw60/CLHS/Body/f_nconc.htm
+    	(stable-sort (nconc n lst)
+    		         #'(lambda (x y) (< (elemento-valor x) (elemento-valor y)))))
+
+    (defun procura-A* (problema heuristica)
+    	(let ((estado-actual (problema-estado-inicial problema))
+    		 ; (f-resultado (problema-resultado problema))
+    		 (f-solucao (problema-solucao problema))
+    		 (f-accoes (problema-accoes problema))
+    		 (accao-actual NIL)
+    		 (lista-abertos NIL)
+    		 (numero-abertos NIL)
+    		 (novo-estado NIL)
+    		 (proximo-elemento NIL))
+    		(loop (when (funcall f-solucao estado-actual)
+					; nreverse: http://clhs.lisp.se/Body/f_revers.htm
+					(return-from procura-A* (nreverse accao-actual)))
+    			(dolist (accao-actual (funcall f-accoes estado-actual))
+
+				  ; (make-estado :pontos (estado-pontos eo) 
+				  ;     :pecas-por-colocar (copy-list (estado-pecas-por-colocar eo)) 
+				  ;     :pecas-colocadas (copy-list (estado-pecas-colocadas eo)) 
+				  ;     :tabuleiro (copia-tabuleiro (estado-tabuleiro eo))))
+
+    				(make-elemento
+    					:valor (+ (problema-custo-caminho problema) (funcall heuristica novo-estado))
+    					:estado estado-actual
+    					:accoes (cons (funcall f-accoes) accao-actual)))
+    			(setf lista-abertos (ordenado numero-abertos lista-abertos))
+    		   	(setf proximo-elemento (car lista-abertos))
+    		   	(setf lista-abertos (cdr lista-abertos))
+    		   	(setf estado-actual (elemento-estado proximo-elemento))
+    		   	(setf accao-actual (elemento-accoes proximo-elemento)))))
 
 (load "utils.lisp")
 
+
+
+; (defstruct elemento
+; 	(valor NIL)
+; 	(estado NIL)
+; 	(accoes NIL))
