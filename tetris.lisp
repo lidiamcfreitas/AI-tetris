@@ -327,41 +327,41 @@
 
 
     ; ; stable-sort: http://clhs.lisp.se/Body/f_sort_.htm
-    ; (defun ordenado (n lst)
-    ; 	; nconc: http://www.lispworks.com/documentation/lw60/CLHS/Body/f_nconc.htm
-    ; 	(stable-sort (nconc n lst)
-    ; 		         #'(lambda (x y) (< (elemento-valor x) (elemento-valor y)))))
+    (defun ordenado (n lst)
+    	; nconc: http://www.lispworks.com/documentation/lw60/CLHS/Body/f_nconc.htm
+    	(stable-sort (nconc n lst)
+    		         #'(lambda (x y) (< (elemento-valor x) (elemento-valor y)))))
 
-    ; (defun procura-A* (problema heuristica)
-    ; 	(let ((estado-actual (problema-estado-inicial problema))
-    ; 		 ; (f-resultado (problema-resultado problema))
-    ; 		 (f-solucao (problema-solucao problema))
-    ; 		 (f-accoes (problema-accoes problema))
-    ; 		 (accao-actual NIL)
-    ; 		 (lista-abertos NIL)
-    ; 		 (numero-abertos NIL)
-    ; 		 (novo-estado NIL)
-    ; 		 (proximo-elemento NIL))
-    ; 		(loop (when (funcall f-solucao estado-actual)
+    (defun procura-A* (problema heuristica)
+    	(let ((estado-actual (problema-estado-inicial problema))
+    		 ; (f-resultado (problema-resultado problema))
+    		 (f-solucao (problema-solucao problema))
+    		 (f-accoes (problema-accoes problema))
+    		 (accao-actual NIL)
+    		 (lista-abertos NIL)
+    		 (numero-abertos NIL)
+    		 (novo-estado NIL)
+    		 (proximo-elemento NIL))
+         
+    		(loop (when (funcall f-solucao estado-actual)
+          (print "estou no loop")
 				; 	; nreverse: http://clhs.lisp.se/Body/f_revers.htm
 				; 	(return-from procura-A* (nreverse accao-actual)))
-    ; 			(dolist (accao-actual (funcall f-accoes estado-actual))
+    			(dolist (accao-actual (funcall f-accoes estado-actual))
+              (print "estou no dolists")
+                (setf novo-estado (resultado estado-actual accao-actual))
+                (print novo-estado)
+                (setf proximo-elemento (make-elemento ;CARE: pode nao ser a variavel proximo-elemento
+                                      		:valor (+ (funcall (problema-custo-caminho problema) novo-estado) (funcall heuristica novo-estado))
+                                      		:estado novo-estado
+                                      		:accoes accao-actual)));(cons (funcall f-accoes) accao-actual)))
 
-				;   ; (make-estado :pontos (estado-pontos eo) 
-				;   ;     :pecas-por-colocar (copy-list (estado-pecas-por-colocar eo)) 
-				;   ;     :pecas-colocadas (copy-list (estado-pecas-colocadas eo)) 
-				;   ;     :tabuleiro (copia-tabuleiro (estado-tabuleiro eo))))
-
-    ; 				(make-elemento
-    ; 					:valor (+ (problema-custo-caminho problema) (funcall heuristica novo-estado))
-    ; 					:estado estado-actual
-    ; 					:accoes (cons (funcall f-accoes) accao-actual)))
-    ; 			(setf lista-abertos (ordenado numero-abertos lista-abertos))
-    ; 		   	(setf proximo-elemento (car lista-abertos))
-    ; 		   	(setf lista-abertos (cdr lista-abertos))
-    ; 		   	(setf estado-actual (elemento-estado proximo-elemento))
-    ; 		   	(setf accao-actual (elemento-accoes proximo-elemento)))))
-
+    			(setf lista-abertos (ordenado numero-abertos lista-abertos))
+          (print "passei o lista-abertos")
+    		   	(setf proximo-elemento (car lista-abertos))
+    		   	(setf lista-abertos (cdr lista-abertos))
+    		   	(setf estado-actual (elemento-estado proximo-elemento))
+    		   	(setf accao-actual (elemento-accoes proximo-elemento))))))
 
 
 ; (defstruct elemento
