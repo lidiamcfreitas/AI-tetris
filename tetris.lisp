@@ -332,42 +332,48 @@
     	(stable-sort (nconc n lst)
     		         #'(lambda (x y) (< (elemento-valor x) (elemento-valor y)))))
 
-    (defun procura-A* (problema heuristica)
-    	(let ((estado-actual (problema-estado-inicial problema))
-    		 ; (f-resultado (problema-resultado problema))
-    		 (f-solucao (problema-solucao problema))
-    		 (f-accoes (problema-accoes problema))
-    		 (accao-actual NIL)
-    		 (lista-abertos NIL)
-    		 (numero-abertos NIL)
-    		 (novo-estado NIL)
-    		 (proximo-elemento NIL))
-         
-    		(loop (when (funcall f-solucao estado-actual)
-          (print "estou no loop")
-				; 	; nreverse: http://clhs.lisp.se/Body/f_revers.htm
-				; 	(return-from procura-A* (nreverse accao-actual)))
-    			(dolist (accao-actual (funcall f-accoes estado-actual))
-              (print "estou no dolists")
-                (setf novo-estado (resultado estado-actual accao-actual))
-                (print novo-estado)
-                (setf proximo-elemento (make-elemento ;CARE: pode nao ser a variavel proximo-elemento
-                                      		:valor (+ (funcall (problema-custo-caminho problema) novo-estado) (funcall heuristica novo-estado))
-                                      		:estado novo-estado
-                                      		:accoes accao-actual)));(cons (funcall f-accoes) accao-actual)))
+(defun add-to (lista elem)
+  (setf lista 
+        (sort (append lista (list elem)) #'(lambda (x y) (<= (elemento-valor x) (elemento-valor y))))))
 
-    			(setf lista-abertos (ordenado numero-abertos lista-abertos))
-          (print "passei o lista-abertos")
-    		   	(setf proximo-elemento (car lista-abertos))
-    		   	(setf lista-abertos (cdr lista-abertos))
-    		   	(setf estado-actual (elemento-estado proximo-elemento))
-    		   	(setf accao-actual (elemento-accoes proximo-elemento))))))
+(defun pop-elem (lista)
+  (cdr lista))
 
+(defun peek-elem (lista)
+  (car lista))
 
-; (defstruct elemento
-; 	(valor NIL)
-; 	(estado NIL)
-; 	(accoes NIL))
+(defun procura-A* (problema f-heuristica)
+    (let (  (estado-inicial (problema-estado-inicial problema))
+            (f-solucao          (problema-solucao problema))
+            (f-accoes           (problema-accoes problema))
+            (f-resultado        (problema-resultado problema))
+            (f-custo-caminho    (problema-custo-caminho problema))
+            (elemento-ini       nil)
+            (lista-prioridade   nil)
+            (lista-accoes       nil)
+            (novo-custo         nil)
+            (novo-succ          nil)
+            (novo-caminho       nil)
+            (top-elem           nil))
 
-(load "utils.fas")
+      (setf elemento-ini (make-elemento :valor (funcall f-heuristica estado-inicial) :estado estado-inicial :accoes nil))
+      
+      (setf lista-prioridade (add-to lista-prioridade elemento-ini))
+      ;(print lista-prioridade)
+      (loop while lista-prioridade do
+            (setf top-elem (peek-elem lista-prioridade))
+            (setf lista-prioridade (pop-elem lista-prioridade))
+            ; (print lista-prioridade)
+            (if (funcall f-solucao (elemento-estado top-elem)) (return-from procura-A*  (elemento-accoes top-elem)))
+            ; (print "not solution")
+            (setf lista-accoes (funcall f-accoes (elemento-estado top-elem)))
+            (dolist (accao lista-accoes)
+              (setf novo-succ  (funcall f-resultado (elemento-estado top-elem) accao))
+              (setf novo-custo (funcall f-custo-caminho novo-succ))
+              (setf novo-caminho (append (elemento-accoes top-elem) (list accao)))
+              (setf lista-prioridade (add-to lista-prioridade (make-elemento :valor novo-custo :estado novo-succ :accoes novo-caminho)))))
+              ;(print lista-prioridade)))
+      nil))        
+
+ (load "utils.lisp")
 
