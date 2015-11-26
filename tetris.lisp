@@ -342,6 +342,7 @@
            (numero-abertos NIL)
            (novo-estado NIL)
            (proximo-elemento NIL))
+           ; (sucessores NIL))
 
       		 ; (accao-actual NIL)
       		 ; (lista-abertos NIL)
@@ -363,6 +364,9 @@
                                       		:estado novo-estado
                                       		:accoes accao-actual)));(cons (funcall f-accoes) accao-actual)))
                 ;(print lista-abertos)
+
+                (if (null accao-actual)
+                  (return-from procura-A* NIL))
 
     			(setf lista-abertos (ordenado numero-abertos lista-abertos))
           ;(print "passei o lista-abertos")
