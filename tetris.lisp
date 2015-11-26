@@ -366,8 +366,35 @@
               (setf novo-caminho (append (elemento-accoes top-elem) (list accao)))
               (setf lista-prioridade (add-to lista-prioridade (make-elemento :valor novo-custo :estado novo-succ :accoes novo-caminho)))))
               ;(print lista-prioridade)))
-      nil))        
+      nil))
 
-(load "utils.lisp")
+(defun heur-altura-geral (estado)
+  (let ((resultado 0) (tabuleiro (estado-tabuleiro estado)))
+    (dotimes (coluna 10) 
+      (setf resultado (+ resultado (tabuleiro-altura-coluna tabuleiro coluna))))
+    resultado))
+
+(defun inverte-tabuleiro (tabuleiro)
+  (let ((novo-tabuleiro (cria-tabuleiro)))
+    (dotimes (linha 18)
+      (dotimes (coluna 10)
+        (setf (aref novo-tabuleiro (- 17 linha) coluna) (aref tabuleiro linha coluna))))
+    novo-tabuleiro))
+
+(defun heuristica-geral (estado)
+  (+ (heur-altura-geral estado) (custo-oportunidade estado)))
+
+(defun procura-best (tab pecas-p-col)
+  (let ((estado-ini nil)(elemento-ini nil)(problema nil))
+  (setf tab (inverte-tabuleiro tab))
+  (setf estado-ini (make-estado :pontos 0 :pecas-por-colocar pecas-p-col :pecas-colocadas () :tabuleiro tab))
+  (setf elemento-ini (make-elemento :valor 0 :estado estado-ini :accoes nil)) ; TODO heuristica para valor
+
+  (setf problema (make-problema :estado-inicial estado-ini :solucao #'solucao :accoes #'accoes :resultado #'resultado :custo-caminho #'qualidade))
+
+  (procura-A* problema #'heuristica-geral)))        
+
+
+(load "utils.fas")
 
 
