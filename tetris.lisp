@@ -327,7 +327,7 @@
 
 (defun add-to (lista elem)
   (setf lista 
-        (sort (append lista (list elem)) #'(lambda (x y) (<= (elemento-valor x) (elemento-valor y))))))
+        (sort (append lista (list elem)) #'(lambda (x y) (< (elemento-valor x) (elemento-valor y))))))
 
 (defun pop-elem (lista)
   (cdr lista))
@@ -362,7 +362,7 @@
             (setf lista-accoes (funcall f-accoes (elemento-estado top-elem)))
             (dolist (accao lista-accoes)
               (setf novo-succ  (funcall f-resultado (elemento-estado top-elem) accao))
-              (setf novo-custo (funcall f-custo-caminho novo-succ))
+              (setf novo-custo (+ (funcall f-custo-caminho novo-succ) (funcall f-heuristica novo-succ)))
               (setf novo-caminho (append (elemento-accoes top-elem) (list accao)))
               (setf lista-prioridade (add-to lista-prioridade (make-elemento :valor novo-custo :estado novo-succ :accoes novo-caminho)))))
               ;(print lista-prioridade)))
@@ -395,6 +395,6 @@
   (procura-A* problema #'heuristica-geral)))        
 
 
-(load "utils.fas")
+(load "utils.lisp")
 
 
