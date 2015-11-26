@@ -334,34 +334,42 @@
 
     (defun procura-A* (problema heuristica)
     	(let ((estado-actual (problema-estado-inicial problema))
-    		 ; (f-resultado (problema-resultado problema))
-    		 (f-solucao (problema-solucao problema))
-    		 (f-accoes (problema-accoes problema))
-    		 (accao-actual NIL)
-    		 (lista-abertos NIL)
-    		 (numero-abertos NIL)
-    		 (novo-estado NIL)
-    		 (proximo-elemento NIL))
+      		 ; (f-resultado (problema-resultado problema))
+      		 ; (f-solucao (problema-solucao problema))
+      		 ; (f-accoes (problema-accoes problema))
+           (lista-abertos NIL)
+           (accao-actual NIL)
+           (numero-abertos NIL)
+           (novo-estado NIL)
+           (proximo-elemento NIL))
+
+      		 ; (accao-actual NIL)
+      		 ; (lista-abertos NIL)
+      		 ; (numero-abertos NIL)
+      		 ; (novo-estado NIL)
+      		 ; (proximo-elemento NIL))
          
-    		(loop (when (funcall f-solucao estado-actual)
-          (print "estou no loop")
+    		(loop (when (solucao estado-actual)
+                (return-from procura-A* (nreverse accao-actual)))
+          ;(print "estou no loop")
 				; 	; nreverse: http://clhs.lisp.se/Body/f_revers.htm
 				; 	(return-from procura-A* (nreverse accao-actual)))
-    			(dolist (accao-actual (funcall f-accoes estado-actual))
-              (print "estou no dolists")
-                (setf novo-estado (resultado estado-actual accao-actual))
+    			(dolist (accao (accoes estado-actual))
+              ;(print "estou no dolists")
+                (setf novo-estado (resultado estado-actual accao))
                 (print novo-estado)
-                (setf proximo-elemento (make-elemento ;CARE: pode nao ser a variavel proximo-elemento
+                (setf lista-abertos (make-elemento ;CARE: pode nao ser a variavel proximo-elemento
                                       		:valor (+ (funcall (problema-custo-caminho problema) novo-estado) (funcall heuristica novo-estado))
                                       		:estado novo-estado
                                       		:accoes accao-actual)));(cons (funcall f-accoes) accao-actual)))
+                ;(print lista-abertos)
 
     			(setf lista-abertos (ordenado numero-abertos lista-abertos))
-          (print "passei o lista-abertos")
-    		   	(setf proximo-elemento (car lista-abertos))
-    		   	(setf lista-abertos (cdr lista-abertos))
-    		   	(setf estado-actual (elemento-estado proximo-elemento))
-    		   	(setf accao-actual (elemento-accoes proximo-elemento))))))
+          ;(print "passei o lista-abertos")
+  		   	(setf proximo-elemento (car lista-abertos))
+  		   	(setf lista-abertos (cdr lista-abertos))
+  		   	(setf estado-actual (elemento-estado proximo-elemento))
+  		   	(setf accao-actual (elemento-accoes proximo-elemento)))))
 
 
 ; (defstruct elemento
@@ -369,5 +377,5 @@
 ; 	(estado NIL)
 ; 	(accoes NIL))
 
-(load "utils.fas")
+(load "utils.lisp")
 
