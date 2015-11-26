@@ -325,13 +325,6 @@
         (if (eq 'impossivel res) nil res))))
 
 
-
-    ; ; stable-sort: http://clhs.lisp.se/Body/f_sort_.htm
-    (defun ordenado (n lst)
-    	; nconc: http://www.lispworks.com/documentation/lw60/CLHS/Body/f_nconc.htm
-    	(stable-sort (nconc n lst)
-    		         #'(lambda (x y) (< (elemento-valor x) (elemento-valor y)))))
-
 (defun add-to (lista elem)
   (setf lista 
         (sort (append lista (list elem)) #'(lambda (x y) (<= (elemento-valor x) (elemento-valor y))))))
@@ -375,5 +368,6 @@
               ;(print lista-prioridade)))
       nil))        
 
- (load "utils.lisp")
+(load "utils.lisp")
+
 
