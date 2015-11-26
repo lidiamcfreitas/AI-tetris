@@ -1,39 +1,84 @@
 ; https://domenicosolazzo.wordpress.com/2010/09/26/heapsort-a-python-example/
+
+(defun heap-size (heap) 
+ (length heap))
+
+(defun remove-last(l)
+    (reverse (cdr (reverse l))))
+
+(defun remove-last! (x)
+  (do ((y x (cdr y)))
+        ((null (cddr y))
+               (and (rplacd y nil) (return x)))))
 (defun parent(i)
-    (floor i 2))
+ (if (eq i 0) 
+  nil 
+  (floor i 2)))
 
-(defun left(i)
-    (* 2 i))
+(defun left(i heap)
+  (incf i)
+ (if (<= (* 2 i) (heap-size heap)) 
+  (- (* 2 i) 1) 
+  nil))
 
-(defun right(i)
-    (+ (* 2 i) 1))
+(defun right(i heap)
+  (incf i)
+ (if (< (+ (* 2 i) 1) (heap-size heap)) 
+  (* 2 i)
+  nil))
 
-(defun heap-length (heap) (length heap))
+(defun max-heapify (heap i)
+ (let (  (left       (left i heap))
+         (right      (right i heap))
+         (largest    -1)
+         (aux        nil)
+         (len        (heap-size heap)))
+  ;(print heap)
+  (if (and (not (eq left nil)) (>= (nth left heap) (nth i heap))) 
+    (setf largest left)
+   (setf largest i))
 
-(defun heapify (heap-list i)
-    (let (  (left       (left i))
-            (right      (right i))
-            (largest    -1)
-            (aux        nil)
-            (len        (heap-length heap-list)))
+  (if (and (not (eq right nil)) (>= (nth right heap) (nth largest heap)))
+   (setf largest right))
 
-            (if (and (< left len) (>= (nth left heap-list) (nth i heap-list))) 
-                (setf largest left)
-                (setf largest i))
+  (if (not (eq largest i))
+   (progn
+    ;(print largest)
+    ;(print i)
+    (rotatef (nth largest heap) (nth i heap))
+    (max-heapify heap largest)))))
 
-            (if (and (< right len) (>= (nth right heap-list) (nth i heap-list)))
-                (setf largest right))
+(defun build-heap (heap)
+ (let ((upvalue (- (floor (heap-size heap) 2) 1)))
+  (loop for i from upvalue downto 0 do 
+    ;(print i)
+   (max-heapify heap i))
+  heap))
 
-            (if (not (eq largest i))
-                ; swap
-                (progn
-                    (setf aux (nth i heap-list))
-                    (setf (nth i heap-list) (nth largest heap-list)=)
-                    (setf (nth largest heap-list) aux)
-                    (heapify heap-list largest)))))
+(defun heap-increase-key (heap i key)
+    (if (< key (nth i heap)) 
+        (return-from heap 'keyValueError))
+    (setf (nth i heap) key)
+    (loop while (and (> i 0) (not (eq (parent i) nil)) (< (nth (parent i) heap) (nth i heap))) do
+        (rotatef (nth i heap) (nth (parent i) heap))
+        (setf i (parent i)))
+    heap)
 
-(defun build-heap (heap-list)
-    (let ((upvalue (floor (heap-length heap-list) 2)))
-        (loop for i from upvalue downto 0 do 
-            (heapify heap-list i))))
+;(defun heap-sort (heap)
+;    (let ((upvalue (1- (heap-size heap))))
+;    (build-heap heap)
+;    (loop for i from upvalue downto 1 do
+;        (rotatef (nth 0 heap) (nth i heap))
+;        (remove-last! heap)
+;        (max-heapify heap 0))))
 
+(defun heap-extract-max (heap)
+    (let ((max (nth 0 heap)))
+        (setf (nth 0 heap) (nth (1- (heap-size heap)) heap))
+        (remove-last! heap)
+        (max-heapify heap 0)
+        max))
+
+(defun max-heap-insert (heap key)
+    (setf heap (append heap '(0)))
+    (heap-increase-key heap (1- (heap-size heap)) key))
