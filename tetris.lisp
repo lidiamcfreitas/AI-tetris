@@ -19,9 +19,9 @@
      (custo-caminho NIL))
 
     (defstruct elemento
-		(valor NIL)
-		(estado NIL)
-		(accoes NIL))
+    (valor NIL)
+    (estado NIL)
+    (accoes NIL))
 
 ; ======================================================================================= ;
 ; ======================================================================================= ;
@@ -327,7 +327,7 @@
 
 (defun add-to (lista elem)
   (setf lista 
-        (sort (append lista (list elem)) #'(lambda (x y) (< (elemento-valor x) (elemento-valor y))))))
+        (sort (append lista (list elem)) #'(lambda (x y) (<= (elemento-valor x) (elemento-valor y))))))
 
 (defun pop-elem (lista)
   (cdr lista))
@@ -357,7 +357,7 @@
             (setf top-elem (peek-elem lista-prioridade))
             (setf lista-prioridade (pop-elem lista-prioridade))
             ; (print lista-prioridade)
-            (if (funcall f-solucao (elemento-estado top-elem)) (return-from procura-A*  (elemento-accoes top-elem)))
+            (if (funcall f-solucao (elemento-estado top-elem)) (return-from procura-A*  (elemento-accoes top-elem))) ; (progn (print (estado-pontos (elemento-estado top-elem))) (return-from procura-A*  (elemento-accoes top-elem))))
             ; (print "not solution")
             (setf lista-accoes (funcall f-accoes (elemento-estado top-elem)))
             (dolist (accao lista-accoes)
@@ -381,8 +381,16 @@
         (setf (aref novo-tabuleiro (- 17 linha) coluna) (aref tabuleiro linha coluna))))
     novo-tabuleiro))
 
+(defun heur-relevo (estado)
+  (let ((resultado 0) (tab (estado-tabuleiro estado)))
+    (dotimes (col 9)
+      (setf resultado (+ (abs (- (tabuleiro-altura-coluna tab col) (tabuleiro-altura-coluna tab (1+ col)))) resultado)))
+    resultado))
+
 (defun heuristica-geral (estado)
-  (+ (heur-altura-geral estado) (custo-oportunidade estado)))
+  ; (print (+ (heur-altura-geral estado) (/ (custo-oportunidade estado) 100)))
+  (+ (heur-altura-geral estado) (/ (custo-oportunidade estado) 35) (heur-relevo estado)))
+
 
 (defun procura-best (tab pecas-p-col)
   (let ((estado-ini nil)(elemento-ini nil)(problema nil))
@@ -390,11 +398,10 @@
   (setf estado-ini (make-estado :pontos 0 :pecas-por-colocar pecas-p-col :pecas-colocadas () :tabuleiro tab))
   (setf elemento-ini (make-elemento :valor 0 :estado estado-ini :accoes nil)) ; TODO heuristica para valor
 
-  (setf problema (make-problema :estado-inicial estado-ini :solucao #'solucao :accoes #'accoes :resultado #'resultado :custo-caminho #'qualidade))
+  (setf problema (make-problema :estado-inicial estado-ini :solucao #'solucao :accoes #'accoes :resultado #'resultado :custo-caminho #'(lambda (e) (/ (qualidade e) 100))))
 
-  (procura-A* problema #'heuristica-geral)))        
+  (procura-A* problema #'heuristica-geral))) 
 
-
-(load "utils.lisp")
+(load "utils.fas")
 
 
