@@ -413,6 +413,28 @@
   ; (print (+ (heur-altura-geral estado) (/ (custo-oportunidade estado) 100)))
   (+ (* 0.51 (heur-altura-geral estado)) (* 0.3566(heur-relevo estado)) (/ (custo-oportunidade estado) 68)))
 
+; Da mais peso as colunas que tem um maior num de posicoes livres e menor peso se o correspondente
+; estiver na ultima linha do tabuleiro.
+; Portanto, no fim de cada linha, ha o contador que conta o numero de conflitos encontrados e multiplica pelo
+; numero-linhas-vazias. O resultado final e o produto da soma ponderada dos conflitos para cada
+; linhas e numero de linhas livres, o que representa uma medida global do tabuleiro. Um tabuleiro com menos
+; linhas livres e melhor do que outro tabuleiro com mais linhas livres.
+
+; (defun heuristica-melhor-peso (estado)
+;   (let* ((heuristica 0)
+;          (posicoes (estado-tabuleiro estado))
+;          (tamanho (length posicoes))
+;          (numero-linhas-vazias 0)
+;          (tabuleiro (estado-tabuleiro estado)))
+;     (dolist (l tamanho)
+;       (let ((numero-conflitos 0))
+;           (when (null l)
+;               (incf numero-linhas-vazias)
+;               (dolist (c tamanho)
+;                 (when (not (tabuleiro-preenchido-p tabuleiro l c))
+;                       (incf numero-conflitos))))
+;           (setf heuristica (+ heuristica (* numero-linhas-vazias numero-conflitos)))))
+;     (* heuristica numero-linhas-vazias)))
 
 (defun procura-best (tab pecas-p-col)
   (let ((estado-ini nil)(elemento-ini nil)(problema nil))
