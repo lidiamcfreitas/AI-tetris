@@ -71,7 +71,7 @@
     (defun tabuleiro-preenchido-p (tabuleiro l c)
       "retorna o valor logico T se a posicao (l,c) do tabuleiro estiver preenchida e NIL
        c.c." 
-     (aref tabuleiro (- 17 l) c))
+     (aref tabuleiro l c))
 
     (defun tabuleiro-altura-coluna(tabuleiro c)
       "devolve a altura de uma coluna, posicao mais alta que esteja preenchida dessa 
@@ -79,7 +79,7 @@
      (let ((altura 0))
       (dotimes(l 18)
        (when (aref tabuleiro l c) 
-        (setf altura (- 18 l)) 
+        (setf altura (1+ l)) 
         (return)))
       altura))
 
@@ -97,13 +97,13 @@
       "altera o tabuleiro para na posicao correspondente a linha e coluna passar a
        estar preenchido."
      (if (and (< l 18) (< c 10)) 
-      (setf (aref tabuleiro (- 17 l) c) T))
+      (setf (aref tabuleiro l c) T))
      T)
 
     (defun tabuleiro-despreenche (tabuleiro l c)
       "altera o tabuleiro para na posicao correspondente a linha e coluna passar a nao
        estar preenchido."
-     (setf (aref tabuleiro (- 17 l) c) NIL))
+     (setf (aref tabuleiro l c) NIL))
 
     (defun tabuleiro-remove-linha!(tabuleiro l)
       "altera o tabuleiro recebido removendo a linha l do tabuleiro"
@@ -111,14 +111,14 @@
       (dotimes(c 10)
        (tabuleiro-despreenche tabuleiro l c))
       (progn (dotimes (c 10)
-              (setf (aref tabuleiro (- 17 l) c) (aref tabuleiro (1- (- 17 l)) c)))
+              (setf (aref tabuleiro l c) (aref tabuleiro (1+ l) c)))
        (tabuleiro-remove-linha! tabuleiro (1+ l)))))
 
     (defun tabuleiro-topo-preenchido-p(tabuleiro)
       "devolve o valor logico T se existir alguma pos. na linha do topo do tabuleiro que 
       esteja preenchida e NIL c.c."
-     (dotimes(columns 10 NIL)
-      (when (aref tabuleiro 0 columns)
+     (dotimes(columns 10)
+      (when (aref tabuleiro 17 columns)
        (return T))))
 
     (defun tabuleiros-iguais-p (tabuleiro1 tabuleiro2)
@@ -126,11 +126,12 @@
      (equalp tabuleiro1 tabuleiro2))
 
     (defun tabuleiro->array(tabuleiro-arg)
+      "converte um tabuleiro no formato da implementacao para o formato array"
      (let ((linhas 18)(tabuleiro-novo nil) (colunas 10))
       (setf tabuleiro-novo (make-array (list linhas colunas)))
       (dotimes (i linhas)
        (dotimes (j colunas)
-        (setf (aref tabuleiro-novo (- 17 i) j) (aref tabuleiro-arg i j))))
+        (setf (aref tabuleiro-novo i j) (aref tabuleiro-arg i j))))
       tabuleiro-novo))
 
     (defun array->tabuleiro(array)
@@ -244,7 +245,7 @@
         (setf max-altura (- altura-tabuleiro altura-peca))))
 
     ; loop para preencher o tabuleiro com uma dada peca
-    (loop for l from max-altura upto (min 17 (1- (+ max-altura (array-dimension pc 0)))) do
+    (loop for l from (- 17 max-altura) downto (max 0 (- (- 17 max-altura) (array-dimension pc 0))) do
      (loop for c from col upto (1- (+ col (array-dimension pc 1))) do
       (setf peca-pos (aref pc (- l max-altura) (- c col)))
       (if peca-pos
@@ -357,7 +358,7 @@
             (setf top-elem (peek-elem lista-prioridade))
             (setf lista-prioridade (pop-elem lista-prioridade))
             ; (print lista-prioridade)
-            (if (funcall f-solucao (elemento-estado top-elem))  (progn (print (estado-pontos (elemento-estado top-elem))) (return-from procura-A*  (elemento-accoes top-elem)))) ;(return-from procura-A*  (elemento-accoes top-elem))) 
+            (if (funcall f-solucao (elemento-estado top-elem))  (return-from procura-A*  (elemento-accoes top-elem))) ; (progn (print (estado-pontos (elemento-estado top-elem))) (return-from procura-A*  (elemento-accoes top-elem)))) ;
             ; (print "not solution")
             (setf lista-accoes (funcall f-accoes (elemento-estado top-elem)))
             (dolist (accao lista-accoes)
@@ -398,7 +399,7 @@
 
 (defun procura-best (tab pecas-p-col)
   (let ((estado-ini nil)(elemento-ini nil)(problema nil))
-  (setf tab (inverte-tabuleiro tab))
+  ;(setf tab (inverte-tabuleiro tab))
   (setf estado-ini (make-estado :pontos 0 :pecas-por-colocar pecas-p-col :pecas-colocadas () :tabuleiro tab))
   (setf elemento-ini (make-elemento :valor 0 :estado estado-ini :accoes nil)) ; TODO heuristica para valor
 
