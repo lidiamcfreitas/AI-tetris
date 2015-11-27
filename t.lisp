@@ -1,9 +1,5 @@
 ; GRUPO 29 - Bruno Cardoso 72619; Francisco Calisto 70916; Lidia Freitas 78559
 
-(defun insert-after (lst index new-elt)
-  (push new-elt (cdr (nthcdr index lst))) 
-  lst)
-
 
 ; ======================================================================================= ;
 ;                               DEFINICAO DAS ESTRUTURAS DE DADOS                         ;
@@ -331,6 +327,11 @@
                 'impossivel))
         (setf res (dfs estado-inicial))
         (if (eq 'impossivel res) nil res))))
+
+
+(defun insert-after (lst index new-elt)
+  (push new-elt (cdr (nthcdr index lst))) 
+  lst)
 
 
 ;(defun add-to (lista elem)
