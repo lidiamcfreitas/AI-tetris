@@ -14,7 +14,7 @@
 (defun heap-esquerda (i) (declare (fixnum i)) (the fixnum (+ 1 i i)))
 (defun heap-direita (i) (declare (fixnum i)) (the fixnum (+ 2 i i)))
 
-(defun heapificador (heap i key)
+(defun heapify (heap i key)
   "Assume que os filhos do 'i' sao heaps, mas que esse heap[i] pode
   ser maior que os seus filhos. Se assim for, move o heap[i] que lhe pertence."
   (let ((l (heap-esquerda i))
@@ -28,14 +28,14 @@
 	(setf mais-curto r))
     (when (/= mais-curto i)
       (rotatef (aref heap i) (aref heap mais-curto))
-      (heapificador heap mais-curto key))))
+      (heapify heap mais-curto key))))
 
 (defun heap-extrai-min (heap key)
   "Retira da heap o melhor valor (menor valor)."
   (let ((min (aref heap 0)))
     (setf (aref heap 0) (aref heap (- (length heap) 1)))
     (decf (fill-pointer heap))
-    (heapificador heap 0 key)
+    (heapify heap 0 key)
     min))
 
 (defun heap-coloca (heap item key)
