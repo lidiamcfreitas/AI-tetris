@@ -19,14 +19,14 @@
   larger than its children.  If it is, move heap[i] down where it belongs.
   [Page 143 CL&R]."
   (let ((l (heap-left i))
-	(r (heap-right i))
-	(N (- (length heap) 1))
-	smallest)
+  (r (heap-right i))
+  (N (- (length heap) 1))
+  smallest)
     (setf smallest (if (and (<= l N) (<= (heap-val heap l key)
-					 (heap-val heap i key)))
-		       l i))
+           (heap-val heap i key)))
+           l i))
     (if (and (<= r N) (<= (heap-val heap r key) (heap-val heap smallest key)))
-	(setf smallest r))
+  (setf smallest r))
     (when (/= smallest i)
       (rotatef (aref heap i) (aref heap smallest))
       (heapify heap smallest key))))
@@ -47,10 +47,10 @@
   ;(print item)
   (vector-push-extend nil heap)
   (let ((i (- (length heap) 1))
-	(val (funcall key item)))
+  (val (funcall key item)))
     (loop while (and (> i 0) (>= (heap-val heap (heap-parent i) key) val))
       do (setf (aref heap i) (aref heap (heap-parent i))
-	       i (heap-parent i)))
+         i (heap-parent i)))
     (setf (aref heap i) item)
     heap))
 
@@ -406,14 +406,14 @@ recebido"
 ;  (car lista))
 
 (defun add-to (lista elem)
-	(heap-insert lista elem #'(lambda (elem) (elemento-valor elem))))
+  (heap-insert lista elem #'(lambda (elem) (elemento-valor elem))))
 
 (defun pop-elem (lista)
-	(if (not (zerop (fill-pointer lista)))
-	(heap-extract-min lista #'(lambda (elem) (elemento-valor elem)))))
+  (if (not (zerop (fill-pointer lista)))
+  (heap-extract-min lista #'(lambda (elem) (elemento-valor elem)))))
 
 (defun peek-elem (lista)
-	(aref lista 0))
+  (aref lista 0))
 
 (defun procura-A* (problema f-heuristica)
   "recebe um problema e uma heuristica e utiliza o algoritmo A* em arvore para determinar
@@ -425,7 +425,7 @@ recebido"
          (f-custo-caminho    (problema-custo-caminho problema))
          (elemento-ini       nil)
          ;(lista-prioridade   nil)
-         (lista-prioridade 	 (make-heap))
+         (lista-prioridade   (make-heap))
          (lista-accoes       nil)
          (novo-custo         nil)
          (novo-succ          nil)
@@ -434,12 +434,13 @@ recebido"
 
   (setf elemento-ini (make-elemento :valor (funcall f-heuristica estado-inicial) :estado estado-inicial :accoes nil))
   (setf lista-prioridade (add-to lista-prioridade elemento-ini))
-  (print lista-prioridade)
+  ; (print lista-prioridade)
   (loop while lista-prioridade do
    ;(setf top-elem (peek-elem lista-prioridade))
    ;(setf lista-prioridade (pop-elem lista-prioridade))
-	(setf top-elem (pop-elem lista-prioridade))
-	(print top-elem)
+  (setf top-elem (pop-elem lista-prioridade))
+  (desenha-estado (elemento-estado top-elem))
+
    (if (funcall f-solucao (elemento-estado top-elem)) (progn (print (estado-pontos (elemento-estado top-elem))) (return-from procura-A*  (elemento-accoes top-elem)))) ;(return-from procura-A*  (elemento-accoes top-elem)))
 (setf lista-accoes (funcall f-accoes (elemento-estado top-elem)))
 (dolist (accao lista-accoes)
@@ -465,12 +466,13 @@ nil))
   novo-tabuleiro))
 
 (defun heur-buracos (estado)
-	"heuristica que calcula buracos num tabuleiro"
-	(let ((resultado 0))
-	(dotimes (linha 18)
-		(dotimes (coluna 10)
-			(if (tabuleiro-preenchido-p (estado-tabuleiro estado) linha coluna)
-				(incf resultado))))))
+  "heuristica que calcula buracos num tabuleiro"
+  (let ((resultado 0))
+  (dotimes (linha 17)
+    (dotimes (coluna 10)
+      (if (and (tabuleiro-preenchido-p (estado-tabuleiro estado) (1+ linha) coluna) (not (tabuleiro-preenchido-p (estado-tabuleiro estado) linha coluna)))
+        (incf resultado))))
+  resultado))
 
 (defun heur-relevo (estado)
   "heuristica que calcula as diferencas absolutas entre colunas adjacentes de forma a penalizar relevos acentuados"
@@ -481,8 +483,12 @@ nil))
 
 (defun heuristica-geral (estado)
   "heuristica que combina as restantes heuristicas para ser usada na procura best"
+  ;(print "altura geral:")
+  ;(print (heur-altura-geral estado))
+  ;(print "relevo:")
+  ;(print (heur-relevo estado))
  ; (print (+ (heur-altura-geral estado) (/ (custo-oportunidade estado) 100)))
- (+ (* 0.51 (heur-altura-geral estado)) (* 0.3566(heur-relevo estado)) ))
+ (+  (* 300 (heur-buracos estado)) (* 0.3566(heur-relevo estado)) (* 0.51 (heur-altura-geral estado))))
  ;(heur-altura-geral estado)) 
 
 
@@ -506,4 +512,6 @@ nil))
 ; (timings (lambda () (reduce #'+ (procura-best (cria-tabuleiro) '(t i)))))
 
 (load "utils.lisp")
+
+(setf retorno (time (print (procura-best (cria-tabuleiro) (random-pecas 50)))))
 

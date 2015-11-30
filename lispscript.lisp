@@ -443,7 +443,8 @@ recebido"
    ;(setf top-elem (peek-elem lista-prioridade))
    ;(setf lista-prioridade (pop-elem lista-prioridade))
 	(setf top-elem (pop-elem lista-prioridade))
-	(print top-elem)
+	(desenha-estado (elemento-estado top-elem))
+
    (if (funcall f-solucao (elemento-estado top-elem)) (progn (print (estado-pontos (elemento-estado top-elem))) (return-from procura-A*  (elemento-accoes top-elem)))) ;(return-from procura-A*  (elemento-accoes top-elem)))
 (setf lista-accoes (funcall f-accoes (elemento-estado top-elem)))
 (dolist (accao lista-accoes)
@@ -471,10 +472,11 @@ nil))
 (defun heur-buracos (estado)
 	"heuristica que calcula buracos num tabuleiro"
 	(let ((resultado 0))
-	(dotimes (linha 18)
+	(dotimes (linha 17)
 		(dotimes (coluna 10)
-			(if (tabuleiro-preenchido-p (estado-tabuleiro estado) linha coluna)
-				(incf resultado))))))
+			(if (and (tabuleiro-preenchido-p (estado-tabuleiro estado) (1+ linha) coluna) (not (tabuleiro-preenchido-p (estado-tabuleiro estado) linha coluna)))
+				(incf resultado))))
+	resultado))
 
 (defun heur-relevo (estado)
   "heuristica que calcula as diferencas absolutas entre colunas adjacentes de forma a penalizar relevos acentuados"
@@ -485,8 +487,12 @@ nil))
 
 (defun heuristica-geral (estado)
   "heuristica que combina as restantes heuristicas para ser usada na procura best"
+  ;(print "altura geral:")
+  ;(print (heur-altura-geral estado))
+  ;(print "relevo:")
+  ;(print (heur-relevo estado))
  ; (print (+ (heur-altura-geral estado) (/ (custo-oportunidade estado) 100)))
- (+ (* 0.51 (heur-altura-geral estado)) (* 0.3566(heur-relevo estado)) ))
+ (+  (* 300 (heur-buracos estado)) (* 0.3566(heur-relevo estado)) (* 0.51 (heur-altura-geral estado))))
  ;(heur-altura-geral estado)) 
 
 
@@ -511,4 +517,4 @@ nil))
 
 (load "utils.lisp")
 
-(time (procura-best (cria-tabuleiro) '(t i)))
+(setf retorno (time (print (procura-best (cria-tabuleiro) (random-pecas 20)))))
