@@ -488,7 +488,7 @@ nil))
   ;(print "relevo:")
   ;(print (heur-relevo estado))
  ; (print (+ (heur-altura-geral estado) (/ (custo-oportunidade estado) 100)))
- (+  (* 300 (heur-buracos estado)) (* 0.3566(heur-relevo estado)) (* 0.51 (heur-altura-geral estado))))
+ (+  (* valor0 (heur-buracos estado)) (* valor1 (heur-relevo estado)) (* valor2 (heur-altura-geral estado)) (* valor3 (custo-oportunidade estado))))
  ;(heur-altura-geral estado)) 
 
 
@@ -502,16 +502,10 @@ nil))
 
   (procura-A* problema #'heuristica-geral)))
 
-(defun timings (function)
-  (let ((real-base (get-internal-real-time))
-        (run-base (get-internal-run-time)))
-    (funcall function)
-    (values (/ (- (get-internal-real-time) real-base) internal-time-units-per-second)
-            (/ (- (get-internal-run-time) run-base) internal-time-units-per-second))))
-
 ; (timings (lambda () (reduce #'+ (procura-best (cria-tabuleiro) '(t i)))))
 
 (load "utils.lisp")
 
-(setf retorno (time (print (procura-best (cria-tabuleiro) (random-pecas 50)))))
+;(setf retorno (time (print (procura-best (cria-tabuleiro-aleatorio 1 0.085) (random-pecas 8)))))
+
 
