@@ -486,7 +486,7 @@ nil))
 (defun heuristica-geral (estado)
   "heuristica que combina as restantes heuristicas para ser usada na procura best"
  ; (print (+ (heur-altura-geral estado) (/ (custo-oportunidade estado) 100)))
- (+ (* 0.51 (heur-altura-geral estado)) (* 0.3566(heur-relevo estado)) ))
+(+ (* (parse-integer (car *args*)) (heur-altura-geral estado)) (* (parse-integer (cadr *args*))(heur-relevo estado)) (/ (custo-oportunidade estado) (parse-integer (nth 2 *args*)))))
  ;(heur-altura-geral estado)) 
 
 
