@@ -1,11 +1,5 @@
 ; GRUPO 29 - Bruno Cardoso 72619; Francisco Calisto 70916; Lidia Freitas 78559
 
-(defstruct q
-  (key #'identity)
-  (last nil)
-  (elements nil))
-
-
 (defun make-heap (&optional (size 100))
   (make-array size :fill-pointer 0 :adjustable t))
 
@@ -46,7 +40,7 @@
   ;(print heap)
   ;(print item)
   (vector-push-extend nil heap)
-  (let ((i (- (length heap) 1))
+  (let ((i (1- (length heap)))
   (val (funcall key item)))
     (loop while (and (> i 0) (>= (heap-val heap (heap-parent i) key) val))
       do (setf (aref heap i) (aref heap (heap-parent i))
@@ -415,40 +409,77 @@ recebido"
 (defun peek-elem (lista)
   (aref lista 0))
 
+; (defun procura-A* (problema f-heuristica)
+;   "recebe um problema e uma heuristica e utiliza o algoritmo A* em arvore para determinar
+;   a sequencia de accoes que maximiza os pontos obtidos"
+;  (let (  (estado-inicial (problema-estado-inicial problema))
+;          (f-solucao          (problema-solucao problema))
+;          (f-accoes           (problema-accoes problema))
+;          (f-resultado        (problema-resultado problema))
+;          (f-custo-caminho    (problema-custo-caminho problema))
+;          (elemento-ini       nil)
+;          ;(lista-prioridade   nil)
+;          (lista-prioridade   (make-heap))
+;          (lista-accoes       nil)
+;          (novo-custo         nil)
+;          (novo-succ          nil)
+;          (novo-caminho       nil)
+;          (top-elem           nil))
+
+;   (setf elemento-ini (make-elemento :valor (funcall f-heuristica estado-inicial) :estado estado-inicial :accoes nil))
+;   (setf lista-prioridade (add-to lista-prioridade elemento-ini))
+;   ; (print lista-prioridade)
+;   (loop while lista-prioridade do
+;   (setf top-elem (pop-elem lista-prioridade))
+;   ;(desenha-estado (elemento-estado top-elem))
+
+;    (if (funcall f-solucao (elemento-estado top-elem)) (return-from procura-A*  (elemento-accoes top-elem))) ;(progn (print (estado-pontos (elemento-estado top-elem))) (return-from procura-A* (estado-pontos (elemento-estado top-elem))))) ;
+; (setf lista-accoes (funcall f-accoes (elemento-estado top-elem)))
+; (dolist (accao lista-accoes)
+;  (setf novo-succ  (funcall f-resultado (elemento-estado top-elem) accao))
+;  (setf novo-custo (+ (funcall f-custo-caminho novo-succ) (funcall f-heuristica novo-succ)))
+;  ;(print (funcall f-custo-caminho novo-succ))
+;  (setf novo-caminho (append (elemento-accoes top-elem) (list accao)))
+;  (setf lista-prioridade (add-to lista-prioridade (make-elemento :valor novo-custo :estado novo-succ :accoes novo-caminho)))))
+; nil))
+
 (defun procura-A* (problema f-heuristica)
-  "recebe um problema e uma heuristica e utiliza o algoritmo A* em arvore para determinar
-  a sequencia de accoes que maximiza os pontos obtidos"
- (let (  (estado-inicial (problema-estado-inicial problema))
-         (f-solucao          (problema-solucao problema))
-         (f-accoes           (problema-accoes problema))
-         (f-resultado        (problema-resultado problema))
-         (f-custo-caminho    (problema-custo-caminho problema))
-         (elemento-ini       nil)
-         ;(lista-prioridade   nil)
-         (lista-prioridade   (make-heap))
-         (lista-accoes       nil)
-         (novo-custo         nil)
-         (novo-succ          nil)
-         (novo-caminho       nil)
-         (top-elem           nil))
-
-  (setf elemento-ini (make-elemento :valor (funcall f-heuristica estado-inicial) :estado estado-inicial :accoes nil))
-  (setf lista-prioridade (add-to lista-prioridade elemento-ini))
-  ; (print lista-prioridade)
-  (loop while lista-prioridade do
-   ;(setf top-elem (peek-elem lista-prioridade))
-   ;(setf lista-prioridade (pop-elem lista-prioridade))
-  (setf top-elem (pop-elem lista-prioridade))
-  (desenha-estado (elemento-estado top-elem))
-
-   (if (funcall f-solucao (elemento-estado top-elem)) (progn (print (estado-pontos (elemento-estado top-elem))) (return-from procura-A*  (elemento-accoes top-elem)))) ;(return-from procura-A*  (elemento-accoes top-elem)))
-(setf lista-accoes (funcall f-accoes (elemento-estado top-elem)))
-(dolist (accao lista-accoes)
- (setf novo-succ  (funcall f-resultado (elemento-estado top-elem) accao))
- (setf novo-custo (+ (funcall f-custo-caminho novo-succ) (funcall f-heuristica novo-succ)))
- (setf novo-caminho (append (elemento-accoes top-elem) (list accao)))
- (setf lista-prioridade (add-to lista-prioridade (make-elemento :valor novo-custo :estado novo-succ :accoes novo-caminho)))))
-nil))
+    (let (  (estado-inicial (problema-estado-inicial problema))
+            (f-solucao          (problema-solucao problema))
+            (f-accoes           (problema-accoes problema))
+            (f-resultado        (problema-resultado problema))
+            (f-custo-caminho    (problema-custo-caminho problema))
+            (elemento-ini       nil)
+            (lista-prioridade   (make-heap))
+            (lista-accoes       nil)
+            (novo-custo         nil)
+            (novo-succ          nil)
+            (novo-caminho       nil)
+            (top-elem           nil))
+ 
+      (setf elemento-ini (make-elemento :valor (funcall f-heuristica estado-inicial) :estado estado-inicial :accoes nil))
+      ;(print elemento-ini)
+      (setf lista-prioridade (add-to lista-prioridade elemento-ini))
+      ;(print lista-prioridade)
+      (loop while (not (zerop (fill-pointer lista-prioridade))) do
+            (setf top-elem (pop-elem lista-prioridade))
+            ;(desenha-estado (elemento-estado top-elem))
+            ;(print top-elem)
+            ;(print lista-prioridade)
+            (if (funcall f-solucao (elemento-estado top-elem)) (progn (print (estado-pontos (elemento-estado top-elem))) (return-from procura-A*  (elemento-accoes top-elem)))) ;
+            ; (print "not solution")
+            (setf lista-accoes (funcall f-accoes (elemento-estado top-elem)))
+            (dolist (accao lista-accoes)
+              (setf novo-succ  (funcall f-resultado (elemento-estado top-elem) accao))
+              ;(print "custo caminho")
+              ;(print (funcall f-custo-caminho novo-succ))
+              ;(print "heuristica")
+              ;(print (funcall f-heuristica novo-succ))
+              (setf novo-custo (+ (funcall f-custo-caminho novo-succ) (funcall f-heuristica novo-succ)))
+              (setf novo-caminho (append (elemento-accoes top-elem) (list accao)))
+              (setf lista-prioridade (add-to lista-prioridade (make-elemento :valor novo-custo :estado novo-succ :accoes novo-caminho)))))
+              ;(print lista-prioridade)))
+      nil))
 
 (defun heur-altura-geral (estado)
   "heuristica da altura geral que devolve o valor da soma das alturas do tabuleiro"
@@ -483,14 +514,12 @@ nil))
 
 (defun heuristica-geral (estado)
   "heuristica que combina as restantes heuristicas para ser usada na procura best"
-  ;(print "altura geral:")
-  ;(print (heur-altura-geral estado))
-  ;(print "relevo:")
-  ;(print (heur-relevo estado))
- ; (print (+ (heur-altura-geral estado) (/ (custo-oportunidade estado) 100)))
- (+  (* valor0 (heur-buracos estado)) (* valor1 (heur-relevo estado)) (* valor2 (heur-altura-geral estado)) (* valor3 (custo-oportunidade estado))))
+  ;(let (( valor0 100)
+   ;   ( valor1 0.5)
+    ;( valor2 40)
+    ;( valor3 50))
+ (+  (* valor0 (float (/ (heur-buracos estado) 85))) (* valor1 (float (/ (heur-relevo estado) 162))) (* valor2 (float (/ (heur-altura-geral estado) 180))) (* valor3 (float (/ (custo-oportunidade estado) 4800)))))
  ;(heur-altura-geral estado)) 
-
 
 (defun procura-best (tab pecas-p-col)
   "recebe um tabuleiro e uma lista de pecas por colocar, cria um novo problema de tetris e utiliza a heuristica-geral para o resolver"
@@ -498,7 +527,7 @@ nil))
   (setf estado-ini (make-estado :pontos 0 :pecas-por-colocar pecas-p-col :pecas-colocadas () :tabuleiro tab))
   (setf elemento-ini (make-elemento :valor 0 :estado estado-ini :accoes nil))
 
-  (setf problema (make-problema :estado-inicial estado-ini :solucao #'solucao :accoes #'accoes :resultado #'resultado :custo-caminho #'(lambda (e) (/ (qualidade e) 1000))))
+  (setf problema (make-problema :estado-inicial estado-ini :solucao #'solucao :accoes #'accoes :resultado #'resultado :custo-caminho #'(lambda (e) (float (/ (qualidade e) 4800)))))
 
   (procura-A* problema #'heuristica-geral)))
 

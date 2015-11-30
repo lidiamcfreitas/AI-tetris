@@ -8,11 +8,12 @@
 (setf valor3 (with-input-from-string (in (nth 3 *args*))(read in)))
 
 (load "final.lisp")
-(load "utils.lisp")
+;(load "utils.lisp")
 
-(setf real-initial (get-internal-real-time))
-(setf retorno (time (print (procura-best (cria-tabuleiro-aleatorio 1 0.085) (random-pecas 8)))))
-(setf real-final (get-internal-real-time))
-(print "por diferencas:")
-  (print (- real-initial real-final))
+;(ignore-value (setf a1 '#2A((T T T T NIL NIL T T T T)(T T T NIL NIL NIL T T T T)(T T T NIL NIL NIL T T T T)(T T T NIL NIL NIL T T T T)(NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)(NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)(NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)(NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)(NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)(NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)(NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)(NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)(NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)(NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)(NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)(NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)(NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)(NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL))))
+;;;deve retornar IGNORE
+;(setf r1 (procura-best a1 '(t i l l)))
+;(procura-best a1 '(t i l l))
 
+
+(procura-best (cria-tabuleiro-aleatorio 1 0.185) (random-pecas 6))
