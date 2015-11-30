@@ -29,11 +29,7 @@ set -- $variableA
 if [ "$1" == "" ]; then
 echo "time limit reached"
 else
-
-if [[$1 > $max]]; then
-
-else
-
+echo $1
 
 fi
 done
