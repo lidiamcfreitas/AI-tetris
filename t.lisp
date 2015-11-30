@@ -1,9 +1,5 @@
 ; GRUPO 29 - Bruno Cardoso 72619; Francisco Calisto 70916; Lidia Freitas 78559
 
-(defun insert-after (lst index new-elt)
-  (push new-elt (cdr (nthcdr index lst))) 
-  lst)
-
 
 ; ======================================================================================= ;
 ;                               DEFINICAO DAS ESTRUTURAS DE DADOS                         ;
@@ -333,9 +329,9 @@
         (if (eq 'impossivel res) nil res))))
 
 
-;(defun add-to (lista elem)
-;  (setf lista 
-;        (sort (append lista (list elem)) #'(lambda (x y) (<= (elemento-valor x) (elemento-valor y))))))
+(defun insert-after (lst index new-elt)
+  (push new-elt (cdr (nthcdr index lst))) 
+  lst)
 
 (defun add-to (lista elem)
   (let ((valor (elemento-valor elem)) (pos 0))
@@ -367,26 +363,17 @@
             (top-elem           nil))
 
       (setf elemento-ini (make-elemento :valor (funcall f-heuristica estado-inicial) :estado estado-inicial :accoes nil))
-      ;(print elemento-ini)
       (setf lista-prioridade (add-to lista-prioridade elemento-ini))
-      ;(print lista-prioridade)
       (loop while lista-prioridade do
             (setf top-elem (peek-elem lista-prioridade))
             (setf lista-prioridade (pop-elem lista-prioridade))
-            ; (print lista-prioridade)
-            (if (funcall f-solucao (elemento-estado top-elem))  (return-from procura-A*  (elemento-accoes top-elem))) ; (progn (print (estado-pontos (elemento-estado top-elem))) (return-from procura-A*  (elemento-accoes top-elem)))) ;
-            ; (print "not solution")
+            (if (funcall f-solucao (elemento-estado top-elem))  (return-from procura-A*  (elemento-accoes top-elem)))
             (setf lista-accoes (funcall f-accoes (elemento-estado top-elem)))
             (dolist (accao lista-accoes)
               (setf novo-succ  (funcall f-resultado (elemento-estado top-elem) accao))
-              ;(print "custo caminho")
-              ;(print (funcall f-custo-caminho novo-succ))
-              ;(print "heuristica")
-              ;(print (funcall f-heuristica novo-succ))
               (setf novo-custo (+ (funcall f-custo-caminho novo-succ) (funcall f-heuristica novo-succ)))
               (setf novo-caminho (append (elemento-accoes top-elem) (list accao)))
               (setf lista-prioridade (add-to lista-prioridade (make-elemento :valor novo-custo :estado novo-succ :accoes novo-caminho)))))
-              ;(print lista-prioridade)))
       nil))
 
 (defun heur-altura-geral (estado)
@@ -409,19 +396,37 @@
     resultado))
 
 (defun heuristica-geral (estado)
-  ; (print (+ (heur-altura-geral estado) (/ (custo-oportunidade estado) 100)))
   (+ (* 0.51 (heur-altura-geral estado)) (* 0.3566(heur-relevo estado)) (/ (custo-oportunidade estado) 68)))
 
+; Da mais peso as colunas que tem um maior num de posicoes livres e menor peso se o correspondente
+; estiver na ultima linha do tabuleiro.
+; Portanto, no fim de cada linha, ha o contador que conta o numero de conflitos encontrados e multiplica pelo
+; numero-linhas-vazias. O resultado final e o produto da soma ponderada dos conflitos para cada
+; linhas e numero de linhas livres, o que representa uma medida global do tabuleiro. Um tabuleiro com menos
+; linhas livres e melhor do que outro tabuleiro com mais linhas livres.
+
+(defun heuristica-melhor-peso (estado)
+  (let* ((heuristica 0)
+         (numero-linhas-vazias 0)
+         (tabuleiro (estado-tabuleiro estado)))
+    (dotimes (linha 17)
+      (let ((numero-conflitos 0))
+          (when (null linha)
+              (incf numero-linhas-vazias)
+              (dotimes (coluna 9)
+                (when (not (tabuleiro-preenchido-p tabuleiro linha coluna))
+                      (incf numero-conflitos))))
+          (setf heuristica (+ heuristica (* numero-linhas-vazias numero-conflitos)))))
+    (* heuristica numero-linhas-vazias)))
 
 (defun procura-best (tab pecas-p-col)
   (let ((estado-ini nil)(elemento-ini nil)(problema nil))
-  ;(setf tab (inverte-tabuleiro tab))
   (setf estado-ini (make-estado :pontos 0 :pecas-por-colocar pecas-p-col :pecas-colocadas () :tabuleiro tab))
   (setf elemento-ini (make-elemento :valor 0 :estado estado-ini :accoes nil)) ; TODO heuristica para valor
 
   (setf problema (make-problema :estado-inicial estado-ini :solucao #'solucao :accoes #'accoes :resultado #'resultado :custo-caminho #'(lambda (e) (/ (qualidade e) 100))))
 
-  (procura-A* problema #'heuristica-geral))) 
+  (procura-A* problema #'heuristica-geral)))
 
-(load "utils.fas")
+(load "utils.lisp")
 
