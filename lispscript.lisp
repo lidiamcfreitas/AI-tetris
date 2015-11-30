@@ -1,6 +1,13 @@
 #! /usr/local/bin/clisp
-(loop for item in *args* do
-(print (parse-integer item)))
+;(loop for item in *args* do
+;(print (parse-integer item)))
+
+(setf valor0 (with-input-from-string (in (nth 0 *args*))(read in)))
+(setf valor1 (with-input-from-string (in (nth 1 *args*))(read in)))
+(setf valor2 (with-input-from-string (in (nth 2 *args*))(read in)))
+
+
+
 
 ; GRUPO 29 - Bruno Cardoso 72619; Francisco Calisto 70916; Lidia Freitas 78559
 
@@ -486,7 +493,7 @@ nil))
 (defun heuristica-geral (estado)
   "heuristica que combina as restantes heuristicas para ser usada na procura best"
  ; (print (+ (heur-altura-geral estado) (/ (custo-oportunidade estado) 100)))
-(+ (* (parse-integer (car *args*)) (heur-altura-geral estado)) (* (parse-integer (cadr *args*))(heur-relevo estado)) (/ (custo-oportunidade estado) (parse-integer (nth 2 *args*)))))
+(+ (* valor0 (heur-altura-geral estado)) (* valor1 (heur-relevo estado)) (/ (custo-oportunidade estado) valor2)))
  ;(heur-altura-geral estado)) 
 
 
