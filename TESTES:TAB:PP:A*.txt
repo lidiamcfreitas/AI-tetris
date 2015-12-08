@@ -50,6 +50,12 @@ TABULEIROS GERADOS DE FORMA ALEATORIA:
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)) )
 
+(setf e1 (make-estado :pontos 0 :pecas-por-colocar '() :pecas-colocadas '() :tabuleiro t1))
+
+(desenha-estado e1)
+
+
+
 (setf t1 
 #2A((T NIL T T T T T T T T)
     (T T T T NIL T T T NIL NIL)
@@ -69,6 +75,10 @@ TABULEIROS GERADOS DE FORMA ALEATORIA:
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)) )
+
+(setf e1 (make-estado :pontos 0 :pecas-por-colocar '() :pecas-colocadas '() :tabuleiro t1))
+
+(desenha-estado e1)
 
 
 (setf t1 #2A((T NIL T T T T T T T T)
@@ -90,6 +100,10 @@ TABULEIROS GERADOS DE FORMA ALEATORIA:
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)) )
 
+    (setf e1 (make-estado :pontos 0 :pecas-por-colocar '() :pecas-colocadas '() :tabuleiro t1))
+
+(desenha-estado e1)
+
 (setf t1  #2A((T T T T T T T T NIL T)
     (T T NIL T T T T T T T)
     (T T T NIL T T T T T NIL)
@@ -108,6 +122,10 @@ TABULEIROS GERADOS DE FORMA ALEATORIA:
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)) )
+
+    (setf e1 (make-estado :pontos 0 :pecas-por-colocar '() :pecas-colocadas '() :tabuleiro t1))
+
+(desenha-estado e1)
 
 (setf t1 #2A((T T T T T T T T NIL T)
     (T T NIL NIL T NIL T NIL T T)
@@ -128,6 +146,10 @@ TABULEIROS GERADOS DE FORMA ALEATORIA:
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)) )
 
+    (setf e1 (make-estado :pontos 0 :pecas-por-colocar '() :pecas-colocadas '() :tabuleiro t1))
+
+(desenha-estado e1)
+
 (setf t1 #2A((NIL T T T T T T T T T)
     (T T T T T NIL T T NIL T)
     (NIL T NIL NIL T T NIL T T T)
@@ -146,6 +168,10 @@ TABULEIROS GERADOS DE FORMA ALEATORIA:
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)) )
+
+    (setf e1 (make-estado :pontos 0 :pecas-por-colocar '() :pecas-colocadas '() :tabuleiro t1))
+
+(desenha-estado e1)
 
 (setf t1 #2A((T T T NIL T T T T T T)
     (T NIL T T T T T NIL T T)
@@ -166,6 +192,10 @@ TABULEIROS GERADOS DE FORMA ALEATORIA:
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)) )
 
+    (setf e1 (make-estado :pontos 0 :pecas-por-colocar '() :pecas-colocadas '() :tabuleiro t1))
+
+(desenha-estado e1)
+
 (setf t1 #2A((T T T T T NIL T T T T)
     (NIL T T T NIL T NIL NIL NIL NIL)
     (NIL NIL NIL NIL NIL T T T T T)
@@ -184,6 +214,10 @@ TABULEIROS GERADOS DE FORMA ALEATORIA:
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)) )
+
+    (setf e1 (make-estado :pontos 0 :pecas-por-colocar '() :pecas-colocadas '() :tabuleiro t1))
+
+(desenha-estado e1)
 
 (setf t1 #2A((T T T T NIL T T T T T)
     (NIL T T NIL T NIL T T NIL T)
@@ -204,6 +238,10 @@ TABULEIROS GERADOS DE FORMA ALEATORIA:
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)) )
 
+    (setf e1 (make-estado :pontos 0 :pecas-por-colocar '() :pecas-colocadas '() :tabuleiro t1))
+
+(desenha-estado e1)
+
 (setf t1 #2A((T T T T T T T T T NIL)
     (T T T NIL T T NIL T T T)
     (T NIL T T T T T T NIL NIL)
@@ -222,7 +260,11 @@ TABULEIROS GERADOS DE FORMA ALEATORIA:
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
     (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)) )
-    
+
+    (setf e1 (make-estado :pontos 0 :pecas-por-colocar '() :pecas-colocadas '() :tabuleiro t1))
+
+(desenha-estado e1)
+
 
 
 LISTA PECAS:
