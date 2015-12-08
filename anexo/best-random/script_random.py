@@ -6,8 +6,6 @@ import re
 
 random.seed()
 
-
-
 def system_call(command):
 	    p = subprocess.Popen([command], stdout=subprocess.PIPE, shell=True)
 	    return p.stdout.read()
@@ -25,7 +23,6 @@ while True :
 		out = open("output_random_diff.txt", "a+")
 		line = open("tabs_diff.txt", "r")
 		tab = line.readlines()[num_tabs]
-		# out.write("{}".format(tab))
 		line.close()
 		
 		tabuleiro_string = "tabuleiro numero: {}\n".format(num_tabs)
@@ -43,21 +40,5 @@ while True :
 		else:
 			out.write("resultado : impossivel\n")
 		out.close()
-		#output_string = "{} {} {} {} {}\n".format(result, heur_random_values[0], heur_random_values[1], heur_random_values[2], heur_random_values[3])
-		#print(output_string)
-		#out.write(output_string)
-
-
-
-#line = "Cats are smarter than dogs"
-
-#matchObj = re.match( r'(.*) are (.*?) .*', line, re.M|re.I)
-
-#if matchObj:
- #  print ("matchObj.group() : ", matchObj.group())
- #  print ("matchObj.group(1) : ", matchObj.group(1))
- #  print ("matchObj.group(2) : ", matchObj.group(2))
-#else:
-#   print ("No match!!")
 
 
