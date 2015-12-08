@@ -1,0 +1,470 @@
+RESULTADOS DOS TESTES
+10 tabuleiros.
+Cunjuntos de peças:
+'(t i s s i i z o j s o o t z s s s t z o o o o t t t z o t)
+'(i z z z o)
+'(z s i i i j o)
+'(Z T I I O J S T)
+
+
+########################################################################
+
+PASTA PROCURA-PP
+
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx00
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx01
+Exiting on signal 15
+
+*** - handle_fault error2 ! address = 0x100a5c4d0 not in [0x200000000,0x2002174e8) !
+SIGSEGV cannot be cured. Fault address = 0x100a5c4d0.
+GC count: 124
+Space collected by GC: 100337968
+Run time: 19 933744
+Real time: 20 747630
+GC time: 0 742520
+Permanently allocated: 171840 bytes.
+Currently in use: 4331424 bytes.
+Free space: 722 bytes.
+
+*** - handle_fault error2 ! address = 0x100a36920 not in [0x200000000,0x2002174e8) !
+SIGSEGV cannot be cured. Fault address = 0x100a36920.
+GC count: 124
+Space collected by GC: 100337968
+Run time: 19 933799
+Real time: 20 747686
+GC time: 0 742520
+Permanently allocated: 171840 bytes.
+Currently in use: 4331424 bytes.
+Free space: 722 bytes.
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx02
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx03
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx04
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx05
+[500]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx06
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx07
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx08
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx09
+[300]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx10
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx11
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx12
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx13
+[500]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx14
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx15
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx16
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx17
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx18
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx19
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx20
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx21
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx22
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx23
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx24
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx25
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx26
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx27
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx28
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx29
+Signal 15 while exiting on a signal; cleanup may be incomplete
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx30
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx31
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx32
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx33
+[400]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx34
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx35
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx36
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx37
+Signal 15 while exiting on a signal; cleanup may be incomplete
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx38
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx39
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx40
+[0]
+
+########################################################################
+
+PASTA C-P // PROCURA A* COM #QUALIDADE
+
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx00
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx01
+Signal 15 while exiting on a signal; cleanup may be incomplete
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx02
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx03
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx04
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx05
+[400]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx06
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx07
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx08
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx09
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx10
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx11
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx12
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx13
+Signal 15 while exiting on a signal; cleanup may be incomplete
+Exiting on signal []
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx14
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx15
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx16
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx17
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx18
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx19
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx20
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx21
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx22
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx23
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx24
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx25
+[300]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx26
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx27
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx28
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx29
+[400]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx30
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx31
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx32
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx33
+[300]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx34
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx35
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx36
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx37
+[400]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx38
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx39
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx40
+[0]
+
+
+########################################################################
+
+
+PASTA PROCURA-A* // PROCURA A* COM CUSTO-OPORTUNIDADE
+
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx00
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx01
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx02
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx03
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx04
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx05
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx06
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx07
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx08
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx09
+Signal 15 while exiting on a signal; cleanup may be incomplete
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx10
+Signal 15 while exiting on a signal; cleanup may be incomplete
+Exiting on signal []
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx11
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx12
+Signal 15 while exiting on a signal; cleanup may be incomplete
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx13
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx14
+Signal 15 while exiting on a signal; cleanup may be incomplete
+Exiting on signal []
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx15
+Exiting on signal Signal 15 while exiting on a signal; cleanup may be incomplete
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx16
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx17
+Exiting on signal Signal 15 while exiting on a signal; cleanup may be incomplete
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx18
+Signal 15 while exiting on a signal; cleanup may be incomplete
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx19
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx20
+Exiting on signal Signal 15 while exiting on a signal; cleanup may be incomplete
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx21
+Signal 15 while exiting on a signal; cleanup may be incomplete
+Exiting on signal []
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx22
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx23
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx24
+Signal 15 while exiting on a signal; cleanup may be incomplete
+Exiting on signal []
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx25
+Signal 15 while exiting on a signal; cleanup may be incomplete
+Exiting on signal 
+*** - handle_fault error2 ! address = 0x2024ab4a0 not in [0x200000000,0x2015f0200) !
+SIGSEGV cannot be cured. Fault address = 0x2024ab4a0.
+GC count: 21
+Space collected by GC: 25473816
+Run time: 17 957484
+Real time: 20 259764
+GC time: 0 712502
+Permanently allocated: 171840 bytes.
+Currently in use: 48624736 bytes.
+Free space: 184 bytes.
+
+*** - handle_fault error2 ! address = 0x2024ab4a0 not in [0x200000000,0x2015f0200) !
+SIGSEGV cannot be cured. Fault address = 0x2024ab4a0.
+GC count: 21
+Space collected by GC: 25473816
+Run time: 17 957535
+Real time: 20 259815
+GC time: 0 712502
+Permanently allocated: 171840 bytes.
+Currently in use: 48624736 bytes.
+Free space: 184 bytes.
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx26
+Signal 15 while exiting on a signal; cleanup may be incomplete
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx27
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx28
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx29
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx30
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx31
+Signal 15 while exiting on a signal; cleanup may be incomplete
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx32
+Signal 15 while exiting on a signal; cleanup may be incomplete
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx33
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx34
+Signal 15 while exiting on a signal; cleanup may be incomplete
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx35
+Signal 15 while exiting on a signal; cleanup may be incomplete
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx36
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx37
+Signal 15 while exiting on a signal; cleanup may be incomplete
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx38
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx39
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx40
+Signal 15 while exiting on a signal; cleanup may be incomplete
+Exiting on signal []
+
+
+
+########################################################################
+
+
+PASTA PROCURA-A* COM CAMINHO ZERO // PROCURA A* COM CAMINHO = LAMBDA ZERO
+
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx00
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx01
+Signal 15 while exiting on a signal; cleanup may be incomplete
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx02
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx03
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx04
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx05
+Signal 15 while exiting on a signal; cleanup may be incomplete
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx06
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx07
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx08
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx09
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx10
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx11
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx12
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx13
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx14
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx15
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx16
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx17
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx18
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx19
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx20
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx21
+Signal 15 while exiting on a signal; cleanup may be incomplete
+Exiting on signal []
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx22
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx23
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx24
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx25
+Signal 15 while exiting on a signal; cleanup may be incomplete
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx26
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx27
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx28
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx29
+Signal 15 while exiting on a signal; cleanup may be incomplete
+Exiting on signal []
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx30
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx31
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx32
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx33
+Exiting on signal 15
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx34
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx35
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx36
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx37
+Exiting on signal Signal 15 while exiting on a signal; cleanup may be incomplete
+[]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx38
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx39
+[0]
+comand....      gtimeout 20s ./lispscriptbruno.lisp xx40
+*** - EVAL: variable
+      //------------------------------------------------------------------------
+      has no value
+
+[0]

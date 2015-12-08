@@ -1,0 +1,32 @@
+; TESTE 1.1
+
+(setf t1 
+#2A((T T T T T T NIL T T T)
+    (T T T T NIL T T T T NIL)
+    (T T T T NIL T T NIL T NIL)
+    (NIL NIL NIL T T T T NIL T T)
+    (NIL T T NIL NIL NIL NIL T NIL NIL)
+    (NIL NIL T NIL NIL NIL NIL NIL NIL NIL)
+    (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
+    (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
+    (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
+    (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
+    (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
+    (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
+    (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
+    (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
+    (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
+    (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
+    (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)
+    (NIL NIL NIL NIL NIL NIL NIL NIL NIL NIL)) )
+
+
+
+(procura-pp (make-problema :estado-inicial (make-estado :pontos 0 :tabuleiro t1 :pecas-colocadas () :pecas-por-colocar '(t i s s i i z o j s o o t z s s s t z o o o o t t t z o t)) :solucao #'solucao :accoes #'accoes :resultado #'resultado :custo-caminho #'custo-oportunidade) )
+
+; ; custo caminho 0
+; (procura-A* (make-problema :estado-inicial (make-estado :pontos 0 :tabuleiro t1 :pecas-colocadas () :pecas-por-colocar '(t i s s i i z o j s o o t z s s s t z o o o o t t t z o t)) :solucao #'solucao :accoes #'accoes :resultado #'resultado :custo-caminho 0) #'(lambda (x) 0))
+
+; ; custo caminho (custo-oportunidade)
+; (procura-A* (make-problema :estado-inicial (make-estado :pontos 0 :tabuleiro t1 :pecas-colocadas () :pecas-por-colocar '(t i s s i i z o j s o o t z s s s t z o o o o t t t z o t)) :solucao #'solucao :accoes #'accoes :resultado #'resultado :custo-caminho #'custo-oportunidade) #'(lambda (x) 0))
+
