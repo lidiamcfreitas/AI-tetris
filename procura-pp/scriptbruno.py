@@ -9,15 +9,18 @@ heur_random_values = [random.random() for i in range(4)]
 
 print("random values:" , heur_random_values)
 
+def system_call(command):
+    p = subprocess.Popen([command], stdout=subprocess.PIPE, shell=True)
+    return p.stdout.read()
 
-tabs_txt = open("tabs.txt", "wb+")
+#tabs_txt = open("tabs.txt", "wb+")
 
 import glob 
 ficheiros = glob.glob("./xx*")
 for ficheiro in ficheiros:
-	cmd="gtimeout 20s ./lispscriptbruno.lisp " + ficheiro
+	cmd="gtimeout 20s ./lispscriptbruno.lisp " + ficheiro[2:]
 	print("comand....      "+ cmd)
-	cmd_result = subprocess.check_output(cmd, shell=True)
+	cmd_result = system_call(cmd)
 	print("result: ", cmd_result)
 
 #cmd=" for f in xx*; do gtimeout 20s ./lispscriptbruno.lisp $f ; done "
@@ -42,4 +45,4 @@ for ficheiro in ficheiros:
 #else:
 #   print ("No match!!")
 
-tabs_txt.close()
+#tabs_txt.close()
