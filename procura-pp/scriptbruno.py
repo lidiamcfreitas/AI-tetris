@@ -13,19 +13,23 @@ print("random values:" , heur_random_values)
 tabs_txt = open("tabs.txt", "wb+")
 
 import glob 
-ficheiros = glob.glob(“./xx*”)
+ficheiros = glob.glob("./xx*")
 for ficheiro in ficheiros:
-cmd=
-cmd=" for f in xx*; do gtimeout 20s ./lispscriptbruno.lisp $f ; done "
-cmd_result = subprocess.check_output(cmd, shell=True)
+	cmd="gtimeout 20s ./lispscriptbruno.lisp " + ficheiro
+	print("comand....      "+ cmd)
+	cmd_result = subprocess.check_output(cmd, shell=True)
+	print("result: ", cmd_result)
+
+#cmd=" for f in xx*; do gtimeout 20s ./lispscriptbruno.lisp $f ; done "
+#cmd_result = subprocess.check_output(cmd, shell=True)
 #cmd_result = subprocess.check_output([cmd], stderr=subprocess.STDOUT)
-print("running command...    ", cmd)
-print("result: ", cmd_result)
+#print("running command...    ", cmd)
+#print("result: ", cmd_result)
 
-result = [int(s) for s in cmd_result.split() if s.isdigit()]
-print  (result)
+#result = [int(s) for s in cmd_result.split() if s.isdigit()]
+#print  (result)
 
-import re
+#import re
 
 #line = "Cats are smarter than dogs"
 
