@@ -1,47 +1,56 @@
 ; GRUPO 29 - Bruno Cardoso 72619; Francisco Calisto 70916; Lidia Freitas 78559
 
+(defstruct q
+  (key #'identity)
+  (last nil)
+  (elements nil))
+
+
 (defun make-heap (&optional (size 100))
   (make-array size :fill-pointer 0 :adjustable t))
 
-(defun heap-valor (heap i key) (declare (fixnum i)) (funcall key (aref heap i)))
-(defun heap-pai (i) (declare (fixnum i)) (floor (- i 1) 2))
-(defun heap-esquerda (i) (declare (fixnum i)) (the fixnum (+ 1 i i)))
-(defun heap-direita (i) (declare (fixnum i)) (the fixnum (+ 2 i i)))
+(defun heap-val (heap i key) (declare (fixnum i)) (funcall key (aref heap i)))
+(defun heap-parent (i) (declare (fixnum i)) (floor (- i 1) 2))
+(defun heap-left (i) (declare (fixnum i)) (the fixnum (+ 1 i i)))
+(defun heap-right (i) (declare (fixnum i)) (the fixnum (+ 2 i i)))
 
 (defun heapify (heap i key)
-  "Assume que os filhos do 'i' sao heaps, mas que esse heap[i] pode
-  ser maior que os seus filhos. Se assim for, move o heap[i] que lhe pertence."
-  (let ((l (heap-esquerda i))
-  (r (heap-direita i))
+  "Assume that the children of i are heaps, but that heap[i] may be 
+  larger than its children.  If it is, move heap[i] down where it belongs.
+  [Page 143 CL&R]."
+  (let ((l (heap-left i))
+  (r (heap-right i))
   (N (- (length heap) 1))
-  menor-valor)
-    (setf menor-valor (if (and (<= l N) (<= (heap-valor heap l key)
-           (heap-valor heap i key)))
+  smallest)
+    (setf smallest (if (and (<= l N) (<= (heap-val heap l key)
+           (heap-val heap i key)))
            l i))
-    (if (and (<= r N) (<= (heap-valor heap r key) (heap-valor heap menor-valor key)))
-  (setf menor-valor r))
-    (when (/= menor-valor i)
-      (rotatef (aref heap i) (aref heap menor-valor))
-      (heapify heap menor-valor key))))
+    (if (and (<= r N) (<= (heap-val heap r key) (heap-val heap smallest key)))
+  (setf smallest r))
+    (when (/= smallest i)
+      (rotatef (aref heap i) (aref heap smallest))
+      (heapify heap smallest key))))
 
-(defun heap-extrai-min (heap key)
-  "Retira da heap o melhor valor (menor valor)."
+(defun heap-extract-min (heap key)
+  "Pop the best (lowest valued) item off the heap. [Page 150 CL&R]."
   (let ((min (aref heap 0)))
     (setf (aref heap 0) (aref heap (- (length heap) 1)))
     (decf (fill-pointer heap))
     (heapify heap 0 key)
     min))
 
-(defun heap-coloca (heap item key)
-  "Coloca um item na heap."
+(defun heap-insert (heap item key)
+  "Put an item into a heap. [Page 150 CL&R]."
   ;; Note that ITEM is the value to be inserted, and KEY is a function
   ;; that extracts the numeric value from the item.
+  ;(print heap)
+  ;(print item)
   (vector-push-extend nil heap)
-  (let ((i (1- (length heap)))
+  (let ((i (- (length heap) 1))
   (val (funcall key item)))
-    (loop while (and (> i 0) (>= (heap-valor heap (heap-pai i) key) val))
-      do (setf (aref heap i) (aref heap (heap-pai i))
-         i (heap-pai i)))
+    (loop while (and (> i 0) (>= (heap-val heap (heap-parent i) key) val))
+      do (setf (aref heap i) (aref heap (heap-parent i))
+         i (heap-parent i)))
     (setf (aref heap i) item)
     heap))
 
@@ -283,7 +292,9 @@ recebido"
   ; descobre em que posicao deve colocar a peca
   (dotimes (c (array-dimension pc 1))
    (setf altura-peca (peca-altura-coluna pc c))
+   ;(print "alturas tabuleiro:")
    (setf altura-tabuleiro  (tabuleiro-altura-coluna (estado-tabuleiro novo-estado) (+ c col)))
+   ;(print altura-tabuleiro)
    (if (> (- altura-tabuleiro altura-peca) max-altura )
     (setf max-altura (- altura-tabuleiro altura-peca))))
 
@@ -348,18 +359,6 @@ recebido"
    (setf pontos-maximo (+ (calcula-pontos-por-peca x) pontos-maximo)))
   (- pontos-maximo (estado-pontos estado))))
 
-; ======================================================================================= ;
-; ======================================================================================= ;
-;                                                                                         ;
-;                               PROJECTO | SEGUNDA PARTE                                  ;
-;                                                                                         ;
-; ======================================================================================= ;
-; ======================================================================================= ;
-
-; ======================================================================================= ;
-;                           PROCURA EM PROFUNDIDADE PRIMEIRO                              ;
-; ======================================================================================= ;
-
 (defun procura-pp (problema)
   "recebe um problema e retorna uma lista de accoes obtida atraves de uma procura em 
   profundidade primeiro que executadas por ordem resolvem o problema"
@@ -382,34 +381,39 @@ recebido"
    (setf res (dfs estado-inicial))
    (if (eq 'impossivel res) nil res))))
 
-; ==================================== INSERT AFTER ===================================== ;
 
 (defun insert-after (lista i novo-ele)
   "insere um novo elemento numa lista depois de um dado index da lista original"
  (push novo-ele (cdr (nthcdr i lista))) 
  lista)
 
-; ======================================================================================= ;
-;                                   PROCURA A*                                            ;
-; ======================================================================================= ;
+; (defun add-to (lista elem)
+;   "insere um elemento numa lista ordenada de ordem crescente por valores de elementos 
+;   e coloca o dado elemento na posicao mais a esquerda da zona correspondente ao seu valor"
+;  (let ((valor (elemento-valor elem)) (pos 0))
+;   (loop while (and (< pos (length lista)) (< (elemento-valor (nth pos lista)) valor)) do
+;    (incf pos))
+;   (if (zerop pos) (return-from add-to (cons elem lista)))
+;   (setf lista (insert-after lista (1- pos) elem))
+;   lista))
 
-; ====================================== ADD TO ========================================= ;
+; (defun pop-elem (lista)
+;   "devolve a lista sem o primeiro elemento"
+;  (cdr lista))
+
+; (defun peek-elem (lista)
+;   "devolve o primeiro elemento da lista"
+;  (car lista))
 
 (defun add-to (lista elem)
-  (heap-coloca lista elem #'(lambda (elem) (elemento-valor elem))))
-
-; ==================================== POP ELEMENT ====================================== ;
+  (heap-insert lista elem #'(lambda (elem) (elemento-valor elem))))
 
 (defun pop-elem (lista)
   (if (not (zerop (fill-pointer lista)))
-  (heap-extrai-min lista #'(lambda (elem) (elemento-valor elem)))))
-
-; ==================================== PEEK ELEMENT ===================================== ;
+  (heap-extract-min lista #'(lambda (elem) (elemento-valor elem)))))
 
 (defun peek-elem (lista)
   (aref lista 0))
-
-; ======================================================================================= ;
 
 (defun procura-A* (problema f-heuristica)
     (let (  (estado-inicial (problema-estado-inicial problema))
@@ -429,7 +433,7 @@ recebido"
       (setf lista-prioridade (add-to lista-prioridade elemento-ini))
       (loop while (not (zerop (fill-pointer lista-prioridade))) do
             (setf top-elem (pop-elem lista-prioridade))
-            ;(desenha-estado (elemento-estado top-elem))
+            (desenha-estado (elemento-estado top-elem))
             (if (funcall f-solucao (elemento-estado top-elem)) (progn (print (estado-pontos (elemento-estado top-elem))) (return-from procura-A*  (elemento-accoes top-elem))))
             (setf lista-accoes (funcall f-accoes (elemento-estado top-elem)))
             (dolist (accao lista-accoes)
@@ -439,20 +443,12 @@ recebido"
               (setf lista-prioridade (add-to lista-prioridade (make-elemento :valor novo-custo :estado novo-succ :accoes novo-caminho)))))
       nil))
 
-; ======================================================================================= ;
-;                                   PROCURA BEST                                          ;
-; ======================================================================================= ;
-
-; ============================ HEURISTICA ALTURA GERAL ================================== ;
-
 (defun heur-altura-geral (estado)
   "heuristica da altura geral que devolve o valor da soma das alturas do tabuleiro"
  (let ((resultado 0) (tabuleiro (estado-tabuleiro estado)))
   (dotimes (coluna 10) 
    (setf resultado (+ resultado (tabuleiro-altura-coluna tabuleiro coluna))))
   resultado))
-
-; ================================= INVERTE TABULEIRO =================================== ;
 
 (defun inverte-tabuleiro (tabuleiro)
   "funcao auxiliar que inverte o tabuleiro"
@@ -461,8 +457,6 @@ recebido"
    (dotimes (coluna 10)
     (setf (aref novo-tabuleiro (- 17 linha) coluna) (aref tabuleiro linha coluna))))
   novo-tabuleiro))
-
-; =============================== HEURISTICA BURACOS ==================================== ;
 
 (defun heur-buracos (estado)
   "heuristica que calcula buracos num tabuleiro"
@@ -473,8 +467,6 @@ recebido"
         (incf resultado))))
   resultado))
 
-; ================================= HEURISTICA RELEVO =================================== ;
-
 (defun heur-relevo (estado)
   "heuristica que calcula as diferencas absolutas entre colunas adjacentes de forma a penalizar relevos acentuados"
  (let ((resultado 0) (tab (estado-tabuleiro estado)))
@@ -482,13 +474,10 @@ recebido"
    (setf resultado (+ (abs (- (tabuleiro-altura-coluna tab col) (tabuleiro-altura-coluna tab (1+ col)))) resultado)))
   resultado))
 
-; ================================= HEURISTICA GERAL ==================================== ;
-
 (defun heuristica-geral (estado)
   "heuristica que combina as restantes heuristicas para ser usada na procura best"
- (+  (* valor0 (float (/ (heur-buracos estado) 85))) (* valor1 (float (/ (heur-relevo estado) 162))) (* valor2 (float (/ (heur-altura-geral estado) 180))) (* valor3 (float (/ (custo-oportunidade estado) 4800)))))
-
-; ======================================================================================= ;
+  (let (( valor0 1000) ( valor1 150) ( valor2 25) ( valor3 50))
+ (+  (* valor0 (float (/ (heur-buracos estado) 85))) (* valor1 (float (/ (heur-relevo estado) 162))) (* valor2 (float (/ (heur-altura-geral estado) 180))) (* valor3 (float (/ (custo-oportunidade estado) 4800))))))
 
 (defun procura-best (tab pecas-p-col)
   "recebe um tabuleiro e uma lista de pecas por colocar, cria um novo problema de tetris e utiliza a heuristica-geral para o resolver"

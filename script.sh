@@ -1,11 +1,11 @@
 #!/bin/sh
 
-valor0=0
+valor0=1
 valor1=0
 valor2=0
 valor3=0
 max=0
-incremento=1
+incremento=100
 changed=0
 
 #valor0=1000.35
