@@ -123,7 +123,7 @@
 ; ; custo caminho (custo-oportunidade)
 ; (procura-A* (make-problema :estado-inicial (make-estado :pontos 0 :tabuleiro t1 :pecas-colocadas () :pecas-por-colocar '(Z T I I O J S T)) :solucao #'solucao :accoes #'accoes :resultado #'resultado :custo-caminho #'custo-oportunidade) #'(lambda (x) 0))
 
-//------------------------------------------------------------------------
+; //------------------------------------------------------------------------
 
 
 ; TESTE 2.1
@@ -251,7 +251,7 @@
 ; ; custo caminho (custo-oportunidade)
 ; (procura-A* (make-problema :estado-inicial (make-estado :pontos 0 :tabuleiro t1 :pecas-colocadas () :pecas-por-colocar '(Z T I I O J S T)) :solucao #'solucao :accoes #'accoes :resultado #'resultado :custo-caminho #'custo-oportunidade) #'(lambda (x) 0))
 
-//------------------------------------------------------------------------
+; //------------------------------------------------------------------------
 
 ; TESTE 3.1
 
@@ -374,7 +374,7 @@
 ; ; custo caminho (custo-oportunidade)
 ; (procura-A* (make-problema :estado-inicial (make-estado :pontos 0 :tabuleiro t1 :pecas-colocadas () :pecas-por-colocar '(Z T I I O J S T)) :solucao #'solucao :accoes #'accoes :resultado #'resultado :custo-caminho #'custo-oportunidade) #'(lambda (x) 0))
 
-//------------------------------------------------------------------------
+; //------------------------------------------------------------------------
 
 ; TESTE 4.1
 
@@ -497,7 +497,7 @@
 ; ; custo caminho (custo-oportunidade)
 ; (procura-A* (make-problema :estado-inicial (make-estado :pontos 0 :tabuleiro t1 :pecas-colocadas () :pecas-por-colocar '(Z T I I O J S T)) :solucao #'solucao :accoes #'accoes :resultado #'resultado :custo-caminho #'custo-oportunidade) #'(lambda (x) 0))
 
-//------------------------------------------------------------------------
+; //------------------------------------------------------------------------
 
 ; TESTE 5.1
 
@@ -620,7 +620,7 @@
 ; ; custo caminho (custo-oportunidade)
 ; (procura-A* (make-problema :estado-inicial (make-estado :pontos 0 :tabuleiro t1 :pecas-colocadas () :pecas-por-colocar '(Z T I I O J S T)) :solucao #'solucao :accoes #'accoes :resultado #'resultado :custo-caminho #'custo-oportunidade) #'(lambda (x) 0))
 
-//------------------------------------------------------------------------
+; //------------------------------------------------------------------------
 
 ; TESTE 6.1
 
@@ -743,7 +743,7 @@
 ; ; custo caminho (custo-oportunidade)
 ; (procura-A* (make-problema :estado-inicial (make-estado :pontos 0 :tabuleiro t1 :pecas-colocadas () :pecas-por-colocar '(Z T I I O J S T)) :solucao #'solucao :accoes #'accoes :resultado #'resultado :custo-caminho #'custo-oportunidade) #'(lambda (x) 0))
 
-//------------------------------------------------------------------------
+; //------------------------------------------------------------------------
 
 ; TESTE 7.1
 
@@ -866,7 +866,7 @@
 ; ; custo caminho (custo-oportunidade)
 ; (procura-A* (make-problema :estado-inicial (make-estado :pontos 0 :tabuleiro t1 :pecas-colocadas () :pecas-por-colocar '(Z T I I O J S T)) :solucao #'solucao :accoes #'accoes :resultado #'resultado :custo-caminho #'custo-oportunidade) #'(lambda (x) 0))
 
-//------------------------------------------------------------------------
+; //------------------------------------------------------------------------
 
 ; TESTE 8.1
 
@@ -989,7 +989,7 @@
 ; ; custo caminho (custo-oportunidade)
 ; (procura-A* (make-problema :estado-inicial (make-estado :pontos 0 :tabuleiro t1 :pecas-colocadas () :pecas-por-colocar '(Z T I I O J S T)) :solucao #'solucao :accoes #'accoes :resultado #'resultado :custo-caminho #'custo-oportunidade) #'(lambda (x) 0))
 
-//------------------------------------------------------------------------
+; //------------------------------------------------------------------------
 
 ; TESTE 9.1
 
@@ -1112,7 +1112,7 @@
 ; ; custo caminho (custo-oportunidade)
 ; (procura-A* (make-problema :estado-inicial (make-estado :pontos 0 :tabuleiro t1 :pecas-colocadas () :pecas-por-colocar '(Z T I I O J S T)) :solucao #'solucao :accoes #'accoes :resultado #'resultado :custo-caminho #'custo-oportunidade) #'(lambda (x) 0))
 
-//------------------------------------------------------------------------
+; //------------------------------------------------------------------------
 
 ; TESTE 10.1
 
@@ -1235,4 +1235,4 @@
 ; ; custo caminho (custo-oportunidade)
 ; (procura-A* (make-problema :estado-inicial (make-estado :pontos 0 :tabuleiro t1 :pecas-colocadas () :pecas-por-colocar '(Z T I I O J S T)) :solucao #'solucao :accoes #'accoes :resultado #'resultado :custo-caminho #'custo-oportunidade) #'(lambda (x) 0))
 
-//------------------------------------------------------------------------
+; //------------------------------------------------------------------------
