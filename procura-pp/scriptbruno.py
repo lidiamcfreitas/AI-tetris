@@ -21,7 +21,9 @@ for ficheiro in ficheiros:
 	cmd="gtimeout 20s ./lispscriptbruno.lisp " + ficheiro[2:]
 	print("comand....      "+ cmd)
 	cmd_result = system_call(cmd)
-	print("result: ", cmd_result)
+	#print("result: ", cmd_result)
+	result = [int(s) for s in cmd_result.split() if s.isdigit()]
+	print  (result)
 
 #cmd=" for f in xx*; do gtimeout 20s ./lispscriptbruno.lisp $f ; done "
 #cmd_result = subprocess.check_output(cmd, shell=True)
