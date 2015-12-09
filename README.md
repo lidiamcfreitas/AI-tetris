@@ -16,7 +16,7 @@ Once implemented the search algorithm, one should make a study/research analysis
 Índice
 ------
 
-- [1ª Entrega](https://github.com/lidiamcfreitas/AI-tetris/Relatorio_testes/Testes_1a_parte/)
+- [1ª Entrega](https://github.com/lidiamcfreitas/AI-tetris/Relatorio_testes/Testes_1a_parte)
 
   - [Procura A* Versão 1](https://github.com/lidiamcfreitas/AI-tetris/Relatorio_testes/Testes_1a_parte/procura-a/)
 
