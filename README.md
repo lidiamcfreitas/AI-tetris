@@ -13,10 +13,10 @@ For this purpose it should perform various tasks ranging from the implementation
 
 Once implemented the search algorithm, one should make a study/research analysis of the various versions of the algorithms, as well as heuristic functions implemented.
 
-Índice
+Índice de Testes
 ------
 
-- [1ª Entrega](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_1a_parte)
+- [1ª Parte](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_1a_parte)
 
   - [Procura A* Versão 1](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_1a_parte/procura-a/)
 
@@ -25,7 +25,7 @@ Once implemented the search algorithm, one should make a study/research analysis
   - [Procura-PP](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_1a_parte/procura-pp/)
 
 
-- [2ª Entrega](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_2a_parte/)
+- [2ª Parte](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_2a_parte/)
 
   - [Procura-Best Genetic](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_2a_parte/best-genetic/)
 
@@ -111,7 +111,7 @@ Mac OS X 10.4+ Intel/PowerPC x86/x64
 
 Linux x86/x64
 
-#### 1ª Entrega - Testes
+#### 1ª Parte - Testes
 
 ##### Procura-A* Versão 1
 
@@ -137,7 +137,7 @@ $ cd AI-tetris/Relatorio_testes/Testes_1a_parte/procura-a-pp/
 $ ./lispscript.py
 ```
 
-#### 2ª Entrega - Testes
+#### 2ª Parte - Testes
 
 ##### Procura-Best Genetic
 
@@ -157,7 +157,7 @@ $ ./lispscript.py
 
 ### Documentation
 
-See the [project report]()(Portuguese) for more details.
+See the [project report]() (Portuguese) for more details.
 
 
 ## Details about Lisp Enviroment
