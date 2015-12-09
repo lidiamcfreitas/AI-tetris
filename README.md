@@ -1,12 +1,9 @@
 # [Artificial Intelligence Tetris Game](https://fenix.tecnico.ulisboa.pt/disciplinas/IArt4517/2015-2016/1-semestre/projecto)
 
-On this project we intended to implement a search algorithm able to play a variant of the game Tetris, in which the parts are known for putting on departure.
+On this project we implemented a search algorithm that was able to play a variant of the popular Tetris game.By receiving a list of tetris pieces, our goal is to maximize the score on a certain game using those pieces.
 
-Our goal is to try to maximize the number points to the defined parts.
 
-To simplify the game, is only allowed the player to choose the rotation and the position where the piece will fall.
-
-Once chosen the rotation and position, the piece should fall right without any further movement.
+The player is able to change the rotation and position of each piece. After choosing, the piece should fall right away without any further movement.
 
 ### Objectives
 
@@ -14,7 +11,7 @@ The aim of the project is to write a program in ```Common Lisp```, using search 
 
 For this purpose it should perform various tasks ranging from the implementation of the types of data used in representation on a board until the implementation of search algorithms and heuristics to guide algorithms.
 
-Once implemented the search algorithm, students should make a study/research analysis of the various versions of the algorithms, as well as heuristic functions implemented.
+Once implemented the search algorithm, one should make a study/research analysis of the various versions of the algorithms, as well as heuristic functions implemented.
 
 Índice
 ------
@@ -66,7 +63,7 @@ lidiamcfreitas@gmail.com
 
 ### How To Download and Compile
 
-It is mandatory you have installed [Python 3.x.x](https://www.python.org/download/releases/3.0/) (or newer) and if you need some help on this please visit the [Python documentation](https://docs.python.org/3/).
+It is mandatory that you have installed [Python 3.x.x](https://www.python.org/download/releases/3.0/) (or newer) and if you need some help on this please visit the [Python documentation](https://docs.python.org/3/).
 
 **NOTE:** we strongly recommend you to check [CLisp](http://www.clisp.org/) for download and compile ```Common Lisp```;
 
