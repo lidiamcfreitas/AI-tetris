@@ -27,9 +27,9 @@ Once implemented the search algorithm, one should make a study/research analysis
 
 - [2ª Entrega](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_2a_parte/)
 
-  - [Procura-Best Genetic](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_1a_parte/best-genetic/)
+  - [Procura-Best Genetic](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_2a_parte/best-genetic/)
 
-  - [Procura-Best Random](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_1a_parte/best-random/)
+  - [Procura-Best Random](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_2a_parte/best-random/)
 
 
 ===================================================
