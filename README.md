@@ -2,7 +2,6 @@
 
 On this project we implemented a search algorithm that was able to play a variant of the popular Tetris game.By receiving a list of tetris pieces, our goal is to maximize the score on a certain game using those pieces.
 
-
 The player is able to change the rotation and position of each piece. After choosing, the piece should fall right away without any further movement.
 
 ### Objectives
