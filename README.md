@@ -18,6 +18,55 @@ For this purpose it should perform various tasks ranging from the implementation
 
 Once implemented the search algorithm, students should make a study/research analysis of the various versions of the algorithms, as well as heuristic functions implemented.
 
+Índice
+------
+
+- [1ª Entrega](https://github.com/lidiamcfreitas/AI-tetris/Relatorio_testes/Testes_1a_parte/)
+
+  - [Procura A* Versão 1](https://github.com/lidiamcfreitas/AI-tetris/Relatorio_testes/Testes_1a_parte/procura-a/)
+
+  - [Procura A* Versão 2](https://github.com/lidiamcfreitas/AI-tetris/Relatorio_testes/Testes_1a_parte/procura-a-2/)
+
+  - [Procura-PP](https://github.com/lidiamcfreitas/AI-tetris/Relatorio_testes/Testes_1a_parte/procura-pp/)
+
+
+- [2ª Entrega](https://github.com/lidiamcfreitas/AI-tetris/Relatorio_testes/Testes_2a_parte/)
+
+  - [Procura-Best Genetic](https://github.com/lidiamcfreitas/AI-tetris/Relatorio_testes/Testes_1a_parte/best-genetic/)
+
+  - [Procura-Best Radom](https://github.com/lidiamcfreitas/AI-tetris/Relatorio_testes/Testes_1a_parte/best-random/)
+
+
+Projecto de Inteligência Artificial - Tetris
+===================================================
+
+Grupo de IA 29
+-------------------
+
+Bruno Cardoso
+
+72619
+
+bruno.f.cardoso@tecnico.ulisboa.pt
+
+-------------------
+
+Francisco Maria Calisto
+
+70916
+
+francisco.calisto@tecnico.ulisboa.pt
+
+-------------------
+
+Lídia Freitas
+
+78559
+
+lidiamcfreitas@gmail.com
+
+-------------------
+
 ### How To Download and Compile
 
 It is mandatory you have installed [Python 3.x.x](https://www.python.org/download/releases/3.0/) (or newer) and if you need some help on this please visit the [Python documentation](https://docs.python.org/3/).
