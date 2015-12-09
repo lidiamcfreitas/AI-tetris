@@ -13,7 +13,7 @@ For this purpose it should perform various tasks ranging from the implementation
 
 Once implemented the search algorithm, one should make a study/research analysis of the various versions of the algorithms, as well as heuristic functions implemented.
 
-Índice de Testes
+Tests Indice
 ------
 
 - [1ª Parte](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_1a_parte)
