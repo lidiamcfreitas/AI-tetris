@@ -10,7 +10,7 @@ To simplify the game, is only allowed the player to choose the rotation and the 
 
 Once chosen the rotation and position, the piece should fall right without any further movement.
 
-### Introduction
+### Objectives
 
 The aim of the project is to write a program in ```Common Lisp```, using search techniques systematically to determine the sequence of actions in order to be able to put all the pieces and trying to maximize the number of points earned.
 
