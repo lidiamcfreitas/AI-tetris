@@ -31,7 +31,9 @@ Setting up a Common Lisp environment is not easy—we've written a tutorial to m
 By the time you finish, you will have:
 
 [CLISP](http://www.gnu.org/software/clisp/) - a Common Lisp implementation with tab completion and [scripting abilities](https://speely.wordpress.com/2010/11/27/writing-scripts-with-common-lisp/).
+
 [Emacs](http://www.gnu.org/software/emacs/) - the preferred Lisp text editor.
+
 [Quicklisp](https://www.quicklisp.org/beta/) - a package system similar to [CPAN](http://www.cpan.org/).
 
 ##### 1) WINDOWS
