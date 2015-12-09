@@ -1,0 +1,96 @@
+heuristic values: [0.016441216301480432, 0.3383680738360155, 0.7614826005183634, 0.3358555934538632]
+tabuleiro numero: 0
+resultado : impossivel
+tabuleiro numero: 1
+resultado : 100
+tabuleiro numero: 2
+resultado : 100
+tabuleiro numero: 3
+resultado : 200
+tabuleiro numero: 4
+resultado : 100
+tabuleiro numero: 5
+resultado : 200
+heuristic values: [0.4646313036167071, 0.4226895567776138, 0.7614826005183634, 0.06311617522444746]
+tabuleiro numero: 0
+resultado : 0
+tabuleiro numero: 1
+resultado : 100
+tabuleiro numero: 2
+resultado : 0
+tabuleiro numero: 3
+resultado : 100
+tabuleiro numero: 4
+resultado : 100
+tabuleiro numero: 5
+resultado : 100
+heuristic values: [0.25373280159762823, 0.4226895567776138, 0.9134927770474299, 0.06780098767615228]
+tabuleiro numero: 0
+resultado : 0
+tabuleiro numero: 1
+resultado : 100
+tabuleiro numero: 2
+resultado : 0
+tabuleiro numero: 3
+resultado : 100
+tabuleiro numero: 4
+resultado : 100
+tabuleiro numero: 5
+heuristic values: [0.06252293039487711, 0.4226895567776138, 0.5869438219752874, 0.06311617522444746]
+tabuleiro numero: 0
+resultado : 0
+tabuleiro numero: 1
+resultado : 100
+tabuleiro numero: 2
+resultado : 0
+tabuleiro numero: 3
+resultado : 100
+tabuleiro numero: 4
+resultado : 100
+tabuleiro numero: 5
+resultado : 100
+heuristic values: [0.25373280159762823, 0.6984126477276682, 0.7614826005183634, 0.06780098767615228]
+tabuleiro numero: 0
+resultado : 0
+tabuleiro numero: 1
+resultado : 100
+tabuleiro numero: 2
+resultado : 0
+tabuleiro numero: 3
+resultado : 100
+tabuleiro numero: 4
+resultado : 100
+tabuleiro numero: 5
+resultado : 100
+heuristic values: [0.25373280159762823, 0.6169685981711657, 0.5869438219752874, 0.06780098767615228]
+tabuleiro numero: 0
+resultado : 0
+tabuleiro numero: 1
+resultado : 100
+tabuleiro numero: 2
+resultado : 0
+tabuleiro numero: 3
+resultado : 100
+tabuleiro numero: 4
+resultado : 100
+tabuleiro numero: 5
+resultado : 100
+heuristic values: [0.06252293039487711, 0.9310757885884794, 0.7614826005183634, 0.04369354680040316]
+tabuleiro numero: 0
+resultado : 0
+tabuleiro numero: 1
+resultado : 0
+tabuleiro numero: 2
+resultado : 0
+tabuleiro numero: 3
+resultado : 100
+tabuleiro numero: 4
+resultado : 100
+tabuleiro numero: 5
+resultado : 100
+heuristic values: [0.9128518893940584, 0.3383680738360155, 0.9134927770474299, 0.06251677931489352]
+tabuleiro numero: 0
+resultado : 0
+tabuleiro numero: 1
+resultado : 100
+tabuleiro numero: 2
