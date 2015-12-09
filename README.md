@@ -37,10 +37,9 @@ Once implemented the search algorithm, students should make a study/research ana
   - [Procura-Best Radom](https://github.com/lidiamcfreitas/AI-tetris/Relatorio_testes/Testes_1a_parte/best-random/)
 
 
-Projecto de Inteligência Artificial - Tetris
 ===================================================
 
-Grupo de IA 29
+AI Group 29
 -------------------
 
 Bruno Cardoso
