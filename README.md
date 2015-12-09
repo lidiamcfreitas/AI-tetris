@@ -157,7 +157,7 @@ $ ./lispscript.py
 
 ### Documentation
 
-See the [project report]().
+See the [project report]()(Portuguese) for more details.
 
 
 ## Details about Lisp Enviroment
