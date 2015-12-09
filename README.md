@@ -147,7 +147,7 @@ $ cd AI-tetris/Relatorio_testes/Testes_2a_parte/best-genetic/
 $ ./lispscript.py
 ```
 
-##### Procura-Best Radom
+##### Procura-Best Random
 
 ```
 $ git clone https://github.com/lidiamcfreitas/AI-tetris/
