@@ -1,7 +1,5 @@
 # [Artificial Intelligence Tetris Game](https://fenix.tecnico.ulisboa.pt/disciplinas/IArt4517/2015-2016/1-semestre/projecto)
 
-[![Build Status](https://travis-ci.org/lidiamcfreitas/AI-tetris.png?branch=master)](https://travis-ci.org/lidiamcfreitas/AI-tetris)
-
 On this project we intended to implement a search algorithm able to play a variant of the game Tetris, in which the parts are known for putting on departure.
 
 Our goal is to try to maximize the number points to the defined parts.
