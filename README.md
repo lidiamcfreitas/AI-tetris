@@ -37,19 +37,25 @@ By the time you finish, you will have:
 ##### 1) WINDOWS
 
 1.1) Install CLISP.
+
 1.2) Ask CLISP where the HOME directory is located: ```(user-homedir-pathname)```. In that directory, create an empty text file called ```.clisprc.lisp```.
+
 1.3) Modify ```YOUR_HOME/.clisprc.lisp``` to look like this.
 
 ##### 2) MAC OS X
 
 2.1) Install Xcode.
+
 2.2) Install MacPorts.
+
 2.3) Install CLISP by entering ```sudo port install ffcall && sudo port install clisp +dynffi``` in a terminal.
 
 ##### 3) LINUX
 
 3.1) Run ```sudo apt-get install clisp emacs slime```, or the appropriate install command for your particular Linux flavor.
+
 3.2) Install Quicklisp.
+
 3.3) Modify ```~/.clisprc.lisp``` to look like this.
 
 ###### REQUIREMENTS
