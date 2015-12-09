@@ -16,20 +16,20 @@ Once implemented the search algorithm, one should make a study/research analysis
 Índice
 ------
 
-- [1ª Entrega](https://github.com/lidiamcfreitas/AI-tetris/Relatorio_testes/Testes_1a_parte)
+- [1ª Entrega](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_1a_parte)
 
-  - [Procura A* Versão 1](https://github.com/lidiamcfreitas/AI-tetris/Relatorio_testes/Testes_1a_parte/procura-a/)
+  - [Procura A* Versão 1](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_1a_parte/procura-a/)
 
-  - [Procura A* Versão 2](https://github.com/lidiamcfreitas/AI-tetris/Relatorio_testes/Testes_1a_parte/procura-a-2/)
+  - [Procura A* Versão 2](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_1a_parte/procura-a-2/)
 
-  - [Procura-PP](https://github.com/lidiamcfreitas/AI-tetris/Relatorio_testes/Testes_1a_parte/procura-pp/)
+  - [Procura-PP](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_1a_parte/procura-pp/)
 
 
-- [2ª Entrega](https://github.com/lidiamcfreitas/AI-tetris/Relatorio_testes/Testes_2a_parte/)
+- [2ª Entrega](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_2a_parte/)
 
-  - [Procura-Best Genetic](https://github.com/lidiamcfreitas/AI-tetris/Relatorio_testes/Testes_1a_parte/best-genetic/)
+  - [Procura-Best Genetic](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_1a_parte/best-genetic/)
 
-  - [Procura-Best Radom](https://github.com/lidiamcfreitas/AI-tetris/Relatorio_testes/Testes_1a_parte/best-random/)
+  - [Procura-Best Random](https://github.com/lidiamcfreitas/AI-tetris/tree/master/Relatorio_testes/Testes_1a_parte/best-random/)
 
 
 ===================================================
