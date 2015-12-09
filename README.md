@@ -157,7 +157,7 @@ $ ./lispscript.py
 
 ### Documentation
 
-See the [project report]() (Portuguese) for more details.
+See the [project report](https://github.com/lidiamcfreitas/AI-tetris/blob/master/Relatorio.pdf) (Portuguese) for more details.
 
 
 ## Details about Lisp Enviroment
