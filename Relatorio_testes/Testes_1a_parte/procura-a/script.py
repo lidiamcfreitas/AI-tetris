@@ -15,10 +15,10 @@ def system_call(command):
 
 #tabs_txt = open("tabs.txt", "wb+")
 
-import glob 
+import glob
 ficheiros = glob.glob("./xx*")
 for ficheiro in ficheiros:
-	cmd="gtimeout 20s ./lispscriptbruno.lisp " + ficheiro[2:]
+	cmd="gtimeout 20s ./lispscript.lisp " + ficheiro[2:]
 	print("comand....      "+ cmd)
 	cmd_result = system_call(cmd)
 	#print("result: ", cmd_result)
